@@ -4,18 +4,78 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./Assets/css/style.css" />
+
     <title>Project1</title>
   </head>
 
   <body>
     <!-- Header -->
-    <header></header>
+    <header>
+      <div class="preferences"></div>
+      <h1>Breakfast Website</h1>
+      <p>How should I feel today?</p>
+      <div class="weather-display"></div>
+    </header>
 
-    <!-- Welcoming section explaining the app  -->
+  <main>
 
-    <!-- Section with the form -->
+<!-- Welcoming section explaining the app  -->
+  <section class="about-section">
+      <p>The breakfast website is for your morning dose of internet goodness.. </p>
+      <button id="welcome-btn" class="btn">Get To Know Me</button>
+  </section>
 
-    <!-- Display of all the items -->
+<!-- Section with the form -->
+  <section class="form-container">
+    <form>
+      <label class="form-label" for="name">Tell us your name.</label>
+      <input name="name" id="username" type="text" autofocus="true" class="form-input" required/> 
+
+      <label class="form-label" for="DOB">What's your date of birth?</label>
+      <input name="DOB" id="DOB" type="date" class="form-input" required></input>
+      
+      <label class="form-label" for="location">In which city do you live?</label>
+      <input name="location" id="location" type="text" class="form-input" required></input>
+      <label class="form-label" for="music-genre">What's your favourite music genre?</label>
+      <div class="btn-section">
+        <button id="genre-btn1" class="form-btn">Death Metal</button>
+        <button id="genre-btn2" class="form-btn">Classical Music</button>
+        <button id="genre-btn3" class="form-btn">Funk</button>
+        <button id="genre-btn4" class="form-btn">Electric</button>
+        <button id="genre-btn5" class="form-btn">Dance</button>
+      </div>  
+      
+      <label class="form-label" for="activity-form">What types of activities do you enjoy?</label>
+      <div class="btn-section">
+        <button id="genre-btn1" class="form-btn">Education</button>
+        <button id="genre-btn2" class="form-btn">Recreational</button>
+        <button id="genre-btn3" class="form-btn">Social</button>
+        <button id="genre-btn4" class="form-btn">DIY</button>
+        <button id="genre-btn5" class="form-btn">Charity</button>
+        <button id="genre-btn6" class="form-btn">Busywork</button>
+        <button id="genre-btn7" class="form-btn">Cooking</button>
+        <button id="genre-btn8" class="form-btn">Relaxation</button>
+        <button id="genre-btn9" class="form-btn">Music</button>
+      </div>  
+
+      <button type="submit" id="form-btn" class="btn">Submit</button>   
+    </form>
+  </section>
+
+<!-- Display of all the items -->
+  <section class="main-display">
+    <div id="horoscope" class="maindisplay-content">Horoscope</div>
+    <div id="song-otd" class="maindisplay-content">Song of the Day</div>
+    <div id="insult-otd" class="maindisplay-content">Insult of the Day</div>
+    <div id="motquote-otd" class="maindisplay-content">Motivational Quote of the Day</div>
+    <div id="activity-otd" class="maindisplay-content"></div>
+    <div id="activity" class="maindisplay-content">Activity of the Day</div>
+  </section>
+
+</main>
+
+<footer class="footer">Powered by caffeine & ❤️</footer>
 
     <script src="./Assets/js/scripts.js"></script>
   </body>
