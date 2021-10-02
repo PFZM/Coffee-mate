@@ -31,6 +31,7 @@ function init() {
   if (user.length !== 0) {
     displayMainSection(user);
   }
+  return;
 }
 
 //when user clicks the button display form appears and display section goes away
@@ -72,7 +73,7 @@ function displayMainSection(user) {
 
   // Header display
   headerTitleEl.textContent =
-    " Welcome " + user.name + " enjoy your coffe mate!";
+    " Welcome " + user.name + ", enjoy your coffe mate!";
 
   preferenceBtnEl.classList = "btn";
 
@@ -81,12 +82,15 @@ function displayMainSection(user) {
   displayTimeAndWeather.appendChild(currentDate);
 
   retrieveWeather(user);
+
+  // const weather = data.main.temp;
+  console.log(user);
 }
 
 function retrieveWeather(user) {
   const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
   const queryURL =
-    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    "http://api.openweathermap.org/data/2.5/weather?q=" +
     user.location +
     "&units=metric" +
     "&appid=" +
@@ -101,11 +105,17 @@ function retrieveWeather(user) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data.main.temp);
+      displayWeather(data);
     })
     .catch(function (error) {
       alert("Unable to retrieve data");
     });
+}
+
+function displayWeather(data) {
+  const temperature = document.createElement("p");
+  temperature.textContent = "Temperature: " + data.main.temp + " °C";
+  displayTimeAndWeather.appendChild(temperature);
 }
 //Form section: user fill the form and then information is storage in localstorage
 
