@@ -52,8 +52,12 @@ header {
     box-shadow: 1px 1px grey inset;
 }
 
-.about-section {
+.hide{
     display: none;
+}
+
+.about-section {
+    display: flex;
     justify-content: center;
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
@@ -64,7 +68,7 @@ header {
     border: 1px solid white; */
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
-    display: none;
+    display: flex;
     flex-direction: column;
 }
 

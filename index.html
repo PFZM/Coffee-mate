@@ -13,7 +13,7 @@
     <!-- Header -->
     <header>
       <div class="preferences"></div>
-      <h1>Breakfast Website</h1>
+      <h1>Coffee Mate!</h1>
       <p>How should I feel today?</p>
       <div class="weather-display"></div>
     </header>
@@ -27,10 +27,10 @@
   </section>
 
 <!-- Section with the form -->
-  <section class="form-container">
+  <section id="form-section" class="hide">
     <form>
       <label class="form-label" for="name">Tell us your name.</label>
-      <input name="name" id="username" type="text" autofocus="true" class="form-input" required/> 
+      <input name="name" id="username" type="text" class="form-input" required/> 
 
       <label class="form-label" for="DOB">What's your date of birth?</label>
       <input name="DOB" id="DOB" type="date" class="form-input" required></input>
@@ -38,12 +38,12 @@
       <label class="form-label" for="location">In which city do you live?</label>
       <input name="location" id="location" type="text" class="form-input" required></input>
       <label class="form-label" for="music-genre">What's your favourite music genre?</label>
-      <div class="btn-section">
-        <button id="genre-btn1" class="form-btn">Death Metal</button>
-        <button id="genre-btn2" class="form-btn">Classical Music</button>
-        <button id="genre-btn3" class="form-btn">Funk</button>
-        <button id="genre-btn4" class="form-btn">Electric</button>
-        <button id="genre-btn5" class="form-btn">Dance</button>
+      <div id="user-music" class="btn-section">
+        <button id="genre-btn1" value = "death" class="form-btn">Death Metal</button>
+        <button id="genre-btn2" value = "classical" class="form-btn">Classical Music</button>
+        <button id="genre-btn3" value = "funk" class="form-btn">Funk</button>
+        <button id="genre-btn4" value = "electric" class="form-btn">Electric</button>
+        <button id="genre-btn5" value = "dance" class="form-btn">Dance</button>
       </div>  
       
       <label class="form-label" for="activity-form">What types of activities do you enjoy?</label>
@@ -64,7 +64,7 @@
   </section>
 
 <!-- Display of all the items -->
-  <section class="main-display">
+  <section id="main" class="hide">
     <div id="horoscope" class="maindisplay-content">Horoscope</div>
     <div id="song-otd" class="maindisplay-content">Song of the Day</div>
     <div id="insult-otd" class="maindisplay-content">Insult of the Day</div>
