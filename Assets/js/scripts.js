@@ -7,6 +7,10 @@ const userNameEl = document.querySelector("#username");
 const dateOfBirthEl = document.querySelector("#DOB");
 const userLocationEl = document.querySelector("#location");
 const userMusicEl = document.querySelector("#user-music");
+const headerEl = document.querySelector("#header");
+const headerTitleEl = document.querySelector("#header-h1");
+const preferenceBtnEl = document.querySelector("#preferences");
+const displayTimeAndWeather = document.querySelector("#display-weather-time");
 
 // User enters and see a ewlcome header and the about section
 
@@ -25,7 +29,7 @@ function init() {
   //Check if there is information in the localstorage if not display about section
   const user = getUserPreferences();
   if (user.length !== 0) {
-    displayMainSection();
+    displayMainSection(user);
   }
 }
 
@@ -35,34 +39,74 @@ function displayForm() {
   formPreferencesEl.className = "form-container";
 }
 
+// function musicOptions() {
+//   userMusicEl.addEventListener("click", function (event) {
+//     event.preventDefault();
+//     const userSelection = event.target;
+
+//     if (userSelection.matches("button") === true) {
+//       const userMusic = userSelection.getAttribute("value");
+//       console.log(userMusic);
+//       return userMusic;
+//     }
+//   });
+// }
+
 function getFormValues() {
   const user = {
     name: userNameEl.value,
     dob: dateOfBirthEl.value,
     location: userLocationEl.value,
-    // music: userMusic,
+    // music: musicOptions(),
   };
+
   setUserPreferences(user);
 
-  displayMainSection();
+  displayMainSection(user);
 }
 
-function displayMainSection() {
+function displayMainSection(user) {
   aboutSectionEl.className = "hide";
   formPreferencesEl.className = "hide";
   mainDisplayEl.className = "main-display";
+
+  // Header display
+  headerTitleEl.textContent =
+    " Welcome " + user.name + " enjoy your coffe mate!";
+
+  preferenceBtnEl.classList = "btn";
+
+  const currentDate = document.createElement("h2");
+  currentDate.textContent = moment().format("dddd, DD-MMM-YYYY, hh:mm");
+  displayTimeAndWeather.appendChild(currentDate);
+
+  retrieveWeather(user);
 }
 
-userMusicEl.addEventListener("click", function (event) {
-  event.preventDefault();
-  const userSelection = event.target;
+function retrieveWeather(user) {
+  const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
+  const queryURL =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    user.location +
+    "&units=metric" +
+    "&appid=" +
+    APIKey;
 
-  if (userSelection.matches("button") === true) {
-    const userMusic = userSelection.getAttribute("value");
-    console.log(userMusic);
-  }
-});
-
+  fetch(queryURL)
+    .then(function (response) {
+      if (!response.ok) {
+        alert("Error: " + response.statusText);
+        return;
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data.main.temp);
+    })
+    .catch(function (error) {
+      alert("Unable to retrieve data");
+    });
+}
 //Form section: user fill the form and then information is storage in localstorage
 
 //then main display is shown
