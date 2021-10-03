@@ -40,12 +40,21 @@
             required
           />
 
-          <label class="form-label" for="DOB">What's your date of birth?</label>
+          <label class="form-label" for="sign">What's your starsign?</label>
           <!-- <input name="DOB" id="DOB" type="date" class="form-input" required /> -->
-          <select name="sign" id="sign">
-            <option value="Aquarius">Aquarius</option>
-            <option value="Pisces">Pisces</option>
-            <option value="Libra">Libra</option>
+          <select name="sign" class="starsigndropdown" id="sign">
+            <option class="signoption" value="Aquarius">Aquarius</option>
+            <option class="signoption" value="Pisces">Pisces</option>
+            <option class="signoption" value="Aries">Aries</option>
+            <option class="signoption" value="Taurus">Taurus</option>
+            <option class="signoption" value="Gemini">Gemini</option>
+            <option class="signoption" value="Cancer">Cancer</option>
+            <option class="signoption" value="Leo">Leo</option>
+            <option class="signoption" value="Virgo">Virgo</option>
+            <option class="signoption" value="Libra">Libra</option>
+            <option class="signoption" value="Scorpio">Scorpio</option>
+            <option class="signoption" value="Sagittarius">Sagittarius</option>
+            <option class="signoption" value="Capricorn">Capricorn</option>
           </select>
 
           <label class="form-label" for="location"
@@ -89,8 +98,7 @@
 
       <!-- Display of all the items -->
       <section id="main" class="main-display">
-        <div id="horoscope" class="maindisplay-content">Horoscope
-          <div id="sign-reading"></div>
+        <div id="horoscope" class="maindisplay-content">Horoscope<div id="sign-reading"></div>
         </div>
         <div id="song-otd" class="maindisplay-content">Song of the Day</div>
         <div id="insult-otd" class="maindisplay-content">Insult of the Day</div>

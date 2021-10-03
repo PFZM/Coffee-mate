@@ -94,6 +94,19 @@ form input {
   height: 2.5rem;
 }
 
+/* Horoscope form styling */
+.starsigndropdown {
+  margin: 0rem 2.5rem;
+  background-color: rgb(255, 255, 255, 0.1);
+  border: 1px solid white;
+  height: 2.5rem;
+}
+
+/* Horoscope dropdown option styling */
+.signoption {
+  background-color: rgba(167, 189, 214);
+}
+
 .form-label {
   margin: 1rem;
 }

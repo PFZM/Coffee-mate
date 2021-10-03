@@ -91,7 +91,7 @@ function displayMainSection(user) {
   console.log(user);
 }
 
-// User star sign
+// User starsign
 function retrieveSign(user) {
   const queryUrl = 
   "https://aztro.sameerkumar.website?day=today&sign=" + 
@@ -118,6 +118,7 @@ function displaySign(data) {
   const signReading = document.createElement("p");
   signReading.textContent = data.description;
   signReadingEl.appendChild(signReading);
+
 }
 
 
