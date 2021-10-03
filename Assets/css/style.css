@@ -43,12 +43,7 @@ header {
 }
 
 .form-btn {
-  margin: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 1.5rem;
-  color: white;
-  border: white solid 1px;
-  background-color: rgb(255, 255, 255, 0.1);
+  
 }
 
 .form-btn:hover {
@@ -111,8 +106,14 @@ form input {
   margin: 0rem 2.5rem;
 }
 
-#form-btn {
+.btn-section button {
   margin: 0rem 10rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  color: white;
+  border: white solid 1px;
+  background-color: rgb(255, 255, 255, 0.1);
 }
 
 .main-display {

@@ -41,11 +41,15 @@
           />
 
           <label class="form-label" for="DOB">What's your date of birth?</label>
-          <input name="DOB" id="DOB" type="date" class="form-input" required />
+          <!-- <input name="DOB" id="DOB" type="date" class="form-input" required /> -->
+          <select name="sign" id="sign">
+            <option value="Aquarius">Aquarius</option>
+            <option value="Pisces">Pisces</option>
+            <option value="Libra">Libra</option>
+          </select>
 
           <label class="form-label" for="location"
-            >In which city do you live?</label
-          >
+            >In which city do you live?</label>
           <input
             name="location"
             id="location"
@@ -57,26 +61,26 @@
             >What's your favourite music genre?</label
           >
           <div id="user-music" class="btn-section">
-            <button value="death" class="form-btn">Death Metal</button>
-            <button value="classical" class="form-btn">Classical Music</button>
-            <button value="funk" class="form-btn">Funk</button>
-            <button value="electric" class="form-btn">Electric</button>
-            <button value="dance" class="form-btn">Dance</button>
+            <button value="death">Death Metal</button>
+            <button value="classical">Classical Music</button>
+            <button value="funk">Funk</button>
+            <button value="electric">Electric</button>
+            <button value="dance">Dance</button>
           </div>
 
           <label class="form-label" for="activity-form"
             >What types of activities do you enjoy?</label
           >
           <div class="btn-section">
-            <button class="form-btn">Education</button>
-            <button class="form-btn">Recreational</button>
-            <button class="form-btn">Social</button>
-            <button class="form-btn">DIY</button>
-            <button class="form-btn">Charity</button>
-            <button class="form-btn">Busywork</button>
-            <button class="form-btn">Cooking</button>
-            <button class="form-btn">Relaxation</button>
-            <button class="form-btn">Music</button>
+            <button>Education</button>
+            <button>Recreational</button>
+            <button>Social</button>
+            <button>DIY</button>
+            <button>Charity</button>
+            <button>Busywork</button>
+            <button>Cooking</button>
+            <button>Relaxation</button>
+            <button>Music</button>
           </div>
 
           <button type="submit" id="form-btn" class="btn">Submit</button>
@@ -84,8 +88,10 @@
       </section>
 
       <!-- Display of all the items -->
-      <section id="main" class="hide">
-        <div id="horoscope" class="maindisplay-content">Horoscope</div>
+      <section id="main" class="main-display">
+        <div id="horoscope" class="maindisplay-content">Horoscope
+          <div id="sign-reading"></div>
+        </div>
         <div id="song-otd" class="maindisplay-content">Song of the Day</div>
         <div id="insult-otd" class="maindisplay-content">Insult of the Day</div>
         <div id="motquote-otd" class="maindisplay-content">
