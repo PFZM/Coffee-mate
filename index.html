@@ -30,7 +30,7 @@
 
       <!-- Section with the form -->
       <section id="form-section" class="hide">
-        <form>
+        <form id="form">
           <label class="form-label" for="name">Tell us your name.</label>
           <input
             name="name"
@@ -57,29 +57,36 @@
             >What's your favourite music genre?</label
           >
           <div id="user-music" class="btn-section">
-            <button value="death" class="form-btn">Death Metal</button>
-            <button value="classical" class="form-btn">Classical Music</button>
-            <button value="funk" class="form-btn">Funk</button>
-            <button value="electric" class="form-btn">Electric</button>
-            <button value="dance" class="form-btn">Dance</button>
+            <button type="button" value="death" class="form-btn">
+              Death Metal
+            </button>
+            <button type="button" value="classical" class="form-btn">
+              Classical Music
+            </button>
+            <button type="button" value="funk" class="form-btn">Funk</button>
+            <button type="button" value="electric" class="form-btn">
+              Electric
+            </button>
+            <button type="button" value="dance" class="form-btn">Dance</button>
           </div>
 
           <label class="form-label" for="activity-form"
             >What types of activities do you enjoy?</label
           >
           <div class="btn-section">
-            <button class="form-btn">Education</button>
-            <button class="form-btn">Recreational</button>
-            <button class="form-btn">Social</button>
-            <button class="form-btn">DIY</button>
-            <button class="form-btn">Charity</button>
-            <button class="form-btn">Busywork</button>
-            <button class="form-btn">Cooking</button>
-            <button class="form-btn">Relaxation</button>
-            <button class="form-btn">Music</button>
+            <button type="button" class="form-btn">Education</button>
+            <button type="button" class="form-btn">Recreational</button>
+            <button type="button" class="form-btn">Social</button>
+            <button type="button" class="form-btn">DIY</button>
+            <button type="button" class="form-btn">Charity</button>
+            <button type="button" class="form-btn">Busywork</button>
+            <button type="button" class="form-btn">Cooking</button>
+            <button type="button" class="form-btn">Relaxation</button>
+            <button type="button" class="form-btn">Music</button>
           </div>
 
           <button type="submit" id="form-btn" class="btn">Submit</button>
+          <button type="button" id="cancel-btn" class="btn hide">Cancel</button>
         </form>
       </section>
 
