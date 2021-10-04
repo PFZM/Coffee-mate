@@ -13,6 +13,7 @@ const headerTitleEl = document.querySelector("#header-h1");
 const preferenceBtnEl = document.querySelector("#preferences");
 const displayTimeAndWeather = document.querySelector("#display-weather-time");
 const cancelBtnEl = document.querySelector("#cancel-btn");
+const iframeSong = document.querySelector("#iframe-song");
 
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -89,17 +90,12 @@ function displayMainSection(user) {
   aboutSectionEl.className = "hide";
   formPreferencesEl.className = "hide";
   mainDisplayEl.className = "main-display";
-  displayTimeAndWeather.innerHTML = "";
 
   // Header display
   headerTitleEl.textContent =
     " Welcome " + user.name + ", enjoy your coffe mate!";
 
   preferenceBtnEl.classList = "btn";
-
-  const currentDate = document.createElement("h2");
-  currentDate.textContent = moment().format("dddd, DD-MMM-YYYY, hh:mm");
-  displayTimeAndWeather.appendChild(currentDate);
 
   // Retrieve weather and display
   retrieveWeather(user);
@@ -135,6 +131,10 @@ function retrieveWeather(user) {
 function displayWeather(data) {
   displayTimeAndWeather.innerHTML = "";
 
+  const currentDate = document.createElement("h2");
+  currentDate.textContent = moment().format("dddd, DD-MMM-YYYY, hh:mm");
+  displayTimeAndWeather.appendChild(currentDate);
+
   const cityAndCountry = document.createElement("h2");
   cityAndCountry.textContent = data.name + " - " + data.sys.country;
   displayTimeAndWeather.appendChild(cityAndCountry);
@@ -153,12 +153,17 @@ function displayWeather(data) {
 
 function retrieveSongOfTheDay(user) {
   const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+  const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
+  const classicPlayList = "PL2788304DC59DBEB4";
+  const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
+  const latinPlayList = "PLkqz3S84Tw-QoDzNr9VvMXxUTQ7TkANO_";
+
+  console.log(user.music);
 
   const MusicQueryURL =
-    "https://youtube.googleapis.com/youtube/v3/videos?part=snippet&q=ranchera&chart=mostPopular&key=" +
-    APIKeyYoutube;
+    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K&maxResults=25&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
 
-  fetch(MusicQueryURL)
+  https: fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
@@ -166,12 +171,17 @@ function retrieveSongOfTheDay(user) {
       }
       return response.json();
     })
-    .then(function (data) {
-      console.log(data);
+    .then(function (dataSong) {
+      console.log(dataSong);
+      displaySongOfTheDay(dataSong);
     })
     .catch(function (error) {
       alert("Unable to retrieve data");
     });
+}
+
+function displaySongOfTheDay(dataSong) {
+  iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
 }
 
 init();

@@ -57,16 +57,12 @@
             >What's your favourite music genre?</label
           >
           <div id="user-music" class="btn-section">
-            <button type="button" value="death" class="form-btn">
-              Death Metal
-            </button>
-            <button type="button" value="classical" class="form-btn">
-              Classical Music
+            <button type="button" value="rock" class="form-btn">Rock</button>
+            <button type="button" value="classic" class="form-btn">
+              Classic
             </button>
             <button type="button" value="funk" class="form-btn">Funk</button>
-            <button type="button" value="electric" class="form-btn">
-              Electric
-            </button>
+            <button type="button" value="latin" class="form-btn">Latin</button>
             <button type="button" value="dance" class="form-btn">Dance</button>
           </div>
 
@@ -93,7 +89,10 @@
       <!-- Display of all the items -->
       <section id="main" class="hide">
         <div id="horoscope" class="maindisplay-content">Horoscope</div>
-        <div id="song-otd" class="maindisplay-content">Song of the Day</div>
+        <div id="song-otd" class="maindisplay-content">
+          <h2>Song of the Day</h2>
+          <iframe id="iframe-song"></iframe>
+        </div>
         <div id="insult-otd" class="maindisplay-content">Insult of the Day</div>
         <div id="motquote-otd" class="maindisplay-content">
           Motivational Quote of the Day
