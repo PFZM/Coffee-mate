@@ -125,7 +125,7 @@ function displayMainSection(user) {
   retrieveWeather(user);
   retrieveSongOfTheDay(user);
   retrieveSign(user);
-  displayMeme();
+  displayJoke();
   // displaypicture();
 }
 
@@ -239,9 +239,13 @@ function displaySign(data) {
   signReadingEl.appendChild(signReading);
 }
 
-function displayMeme() {
-  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en")
+function displayJoke() {
+  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit")
     .then(function (response) {
+      if (!response.ok) {
+        alert("Error: " + response.statusText);
+        return;
+      }
       return response.json();
     })
     .then(function (data) {
@@ -256,6 +260,9 @@ function displayMeme() {
 
       mainDisplayEl.appendChild(jokePart1);
       mainDisplayEl.appendChild(jokePart2);
+    })
+    .catch(function (error) {
+      alert("Data not retrievable");
     });
 }
 
