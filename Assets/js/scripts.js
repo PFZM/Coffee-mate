@@ -16,6 +16,8 @@ const userActivityEl = document.querySelector("#user-activity");
 const cancelBtnEl = document.querySelector("#cancel-btn");
 const iframeSong = document.querySelector("#iframe-song");
 const signReadingEl = document.querySelector("#sign-reading");
+var activityBox = document.getElementById("activity-otd");
+
 
 // Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
@@ -33,8 +35,8 @@ userMusicEl.addEventListener("click", function (event) {
   if (userSelection.matches("button") === true) {
     const userMusic = userSelection.getAttribute("value");
     userFavGenres.push(userMusic);
+    console.log(userFavGenres);
   }
-  console.log(userFavGenres);
 });
 
 const userFavActivity = [];
@@ -44,8 +46,8 @@ userActivityEl.addEventListener("click", function (event) {
   if (userActSelect.matches("button") === true) {
     const userActivity = userActSelect.getAttribute("value");
     userFavActivity.push(userActivity);
+    console.log(userFavActivity);
   }
-  console.log(userFavActivity);
 });
 
 // line 53 - 60: functions to set and get the information from localstorage
@@ -126,7 +128,9 @@ function displayMainSection(user) {
   retrieveSongOfTheDay(user);
   retrieveSign(user);
   displayJoke();
-  // displaypicture();
+  getActivity();
+
+  // displayPicture();
 }
 
 function retrieveWeather(user) {
@@ -240,7 +244,7 @@ function displaySign(data) {
 }
 
 function displayJoke() {
-  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit")
+  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode")
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
@@ -268,20 +272,14 @@ function displayJoke() {
 
 //Activity of the day//
 
-//connection to html ID//
-var activityBox = document.getElementById("activity-otd");
-console.log();
-getActivity();
-
-//randomising activity from array created by buttons//
-var randomActivity =
-  userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
-
-//API link//
 //userFavActivity will need to be altered so that multiple options can be selected//
 function getActivity() {
-  var activityURL =
-    "http://www.boredapi.com/api/activity?type=" + randomActivity;
+  //randomising activity from array created by buttons//
+     // var randomActivity = userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
+      console.log(userFavActivity);
+
+  var activityURL = "http://www.boredapi.com/api/activity?key=5881028";
+               //  "http://www.boredapi.com/api/activity?type=" + randomActivity;
 
   fetch(activityURL)
     .then(function (response) {
@@ -292,19 +290,17 @@ function getActivity() {
       return response.json();
     })
     .then(function (data) {
-      displayActivity(data);
+          var activityContent = document.createElement("p");
+
+          activityContent.textContent = data.activity ;
+          console.log(activityContent);
+          activityBox.appendChild(activityContent);
     })
     .catch(function (error) {
       alert("Data not retrievable");
     });
 }
 
-//Display function for activity API//
-function displayActivity(data) {
-  var activityContent = document.createElement("p");
-  activityContent.textContent = data.activity;
-  activityBox.appendChild(activityContent);
-}
 
 //change text size for activity box title
 var activityBoxText = document.getElementById("activity");
