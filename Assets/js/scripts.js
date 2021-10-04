@@ -17,6 +17,7 @@ const cancelBtnEl = document.querySelector("#cancel-btn");
 const iframeSong = document.querySelector("#iframe-song");
 const signReadingEl = document.querySelector("#sign-reading");
 
+// Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
 preferenceBtnEl.addEventListener("click", displayForm);
@@ -47,6 +48,7 @@ userActivityEl.addEventListener("click", function (event) {
   console.log(userFavActivity);
 });
 
+// line 53 - 60: functions to set and get the information from localstorage
 function getUserPreferences() {
   return JSON.parse(localStorage.getItem("user")) || [];
 }
@@ -55,8 +57,8 @@ function setUserPreferences(user) {
   localStorage.setItem("user", JSON.stringify(user));
 }
 
+//Check if there is the user information in local storage, if not => go to about section if yes => go to main display
 function init() {
-  //Check if there is information in the localstorage if not display about section
   const user = getUserPreferences();
   if (user.length !== 0) {
     displayMainSection(user);
@@ -64,12 +66,13 @@ function init() {
   return;
 }
 
-//when user clicks the button display form appears and about section goes away
+//When user clicks the button display form appears and about section goes away
 function displayForm() {
   aboutSectionEl.className = "hide";
   formPreferencesEl.className = "form-container";
   mainDisplayEl.className = "hide";
 
+  // Display button when click preferences button
   const user = getUserPreferences();
   if (user.length !== 0) {
     cancelBtnEl.className = "btn";
@@ -78,6 +81,7 @@ function displayForm() {
   }
 }
 
+//After submit form button click, get the form values and assign to user.
 function getFormValues() {
   const user = {
     name: userNameEl.value,
@@ -87,8 +91,14 @@ function getFormValues() {
     activity: userFavActivity,
   };
 
-  // validation that user needs to input all fields
-  if (!user.name && !user.dob && !user.location && !user.music) {
+  // validation that user filled all form fields
+  if (
+    !user.name &&
+    !user.sign &&
+    !user.location &&
+    !user.music &&
+    !user.activity
+  ) {
     window.alert("Plaese fill in all the fields");
     return;
   }
@@ -98,8 +108,6 @@ function getFormValues() {
   setUserPreferences(user);
 
   displayMainSection(user);
-
-  console.log(user);
 }
 
 function displayMainSection(user) {
