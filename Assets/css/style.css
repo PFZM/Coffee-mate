@@ -14,13 +14,17 @@ html {
 
 body {
   background-size: cover;
-  background: rgb(167, 189, 214);
+  /* background: rgb(167, 189, 214);
   background: linear-gradient(
     204deg,
     rgba(167, 189, 214, 1) 0%,
     rgba(189, 178, 216, 1) 44%,
     rgba(223, 191, 219, 1) 78%,
-    rgba(252, 215, 209, 1) 100%
+    rgba(252, 215, 209, 1) 100% */
+
+    background-color: #111111;
+opacity: 1;
+background: repeating-linear-gradient( 45deg, #5d0000, #5d0000 20px, #111111 20px, #111111 100px );
   );
 }
 
