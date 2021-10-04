@@ -47,7 +47,15 @@ header {
 }
 
 .form-btn {
-  
+
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  color: white;
+  border: white solid 1px;
+  background-color: rgb(255, 255, 255, 0.1);
+  cursor: pointer;
+
 }
 
 .form-btn:hover {
