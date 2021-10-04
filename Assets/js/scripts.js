@@ -11,6 +11,7 @@ const headerEl = document.querySelector("#header");
 const headerTitleEl = document.querySelector("#header-h1");
 const preferenceBtnEl = document.querySelector("#preferences");
 const displayTimeAndWeather = document.querySelector("#display-weather-time");
+const userActivityEl = document.querySelector('#user-activity');
 
 // User enters and see a ewlcome header and the about section
 
@@ -59,6 +60,7 @@ function getFormValues() {
     dob: dateOfBirthEl.value,
     location: userLocationEl.value,
     // music: musicOptions(),
+    activity: userFavActivity.value
   };
 
   setUserPreferences(user);
@@ -138,3 +140,88 @@ function displayWeather(data) {
     console.error(err);
   });*/
 init();
+
+
+//Insult of the day//
+//Code failing due to CORS issue//
+
+/*var insultBox = document.getElementById('insult-otd');
+getInsult();
+
+function getInsult() {
+  var insultURL = "https://evilinsult.com/generate_insult.php?lang=en&type=json";
+
+fetch(insultURL)
+  .then(function(response) {
+  if (!response.ok) {
+    alert("Error: " + response.statusText);
+    return;
+  }
+  return response.json();
+  })  
+  .then(function() {
+    displayInsult();
+  })
+  .catch(function (error) {
+    alert("Data not retrievable");
+  });
+}
+
+function displayInsult() {
+  var insultContent = document.createElement('p');
+  insultContent.textContent = data.insult;
+  insultBox.appendChild(insultContent);
+} */
+
+//Activity of the day//
+const userFavActivity = [];
+userActivityEl.addEventListener("click", function (event) {
+  const userActSelect = event.target;
+
+  if (userActSelect.matches("button") === true) {
+    const userActivity = userActSelect.getAttribute("value");
+    userFavActivity.push(userActivity)
+  }
+  console.log(userFavActivity)
+})
+
+//connection to html ID//
+var activityBox = document.getElementById('activity-otd');
+console.log()
+getActivity();
+
+//randomising activity from array created by buttons//
+var randomActivity =
+userFavActivity[Math.floor(Math.random()*userFavActivity.length)];
+
+//API link//
+//userFavActivity will need to be altered so that multiple options can be selected//
+function getActivity() {
+  var activityURL = "http://www.boredapi.com/api/activity?type=" + randomActivity;
+
+fetch(activityURL)
+  .then(function(response) {
+  if (!response.ok) {
+    alert("Error: " + response.statusText);
+    return;
+  }
+  return response.json();
+  })  
+  .then(function(data) {
+    displayActivity(data);
+  })
+  .catch(function (error) {
+    alert("Data not retrievable");
+  });
+}
+
+//Display function for activity API//
+function displayActivity(data) {
+  var activityContent = document.createElement('p');
+  activityContent.textContent = data.activity;
+  activityBox.appendChild(activityContent);
+}
+
+//change text size for activity box title
+var activityBoxText = document.getElementById('activity')
+activityBoxText.setAttribute("style", "font-size: 25px; font-weight: bold");
