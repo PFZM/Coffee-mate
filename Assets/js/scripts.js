@@ -12,14 +12,10 @@ const headerEl = document.querySelector("#header");
 const headerTitleEl = document.querySelector("#header-h1");
 const preferenceBtnEl = document.querySelector("#preferences");
 const displayTimeAndWeather = document.querySelector("#display-weather-time");
-const userActivityEl = document.querySelector('#user-activity');
-
+const userActivityEl = document.querySelector("#user-activity");
 const cancelBtnEl = document.querySelector("#cancel-btn");
 const iframeSong = document.querySelector("#iframe-song");
-
 const signReadingEl = document.querySelector("#sign-reading");
-
-// User enters and see a welcome header and the about section
 
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -38,6 +34,17 @@ userMusicEl.addEventListener("click", function (event) {
     userFavGenres.push(userMusic);
   }
   console.log(userFavGenres);
+});
+
+const userFavActivity = [];
+userActivityEl.addEventListener("click", function (event) {
+  const userActSelect = event.target;
+
+  if (userActSelect.matches("button") === true) {
+    const userActivity = userActSelect.getAttribute("value");
+    userFavActivity.push(userActivity);
+  }
+  console.log(userFavActivity);
 });
 
 function getUserPreferences() {
@@ -77,7 +84,7 @@ function getFormValues() {
     sign: signEl.value,
     location: userLocationEl.value,
     music: userFavGenres,
-    activity: userFavActivity.
+    activity: userFavActivity,
   };
 
   // validation that user needs to input all fields
@@ -92,7 +99,7 @@ function getFormValues() {
 
   displayMainSection(user);
 
-  console.log(user);  
+  console.log(user);
 }
 
 function displayMainSection(user) {
@@ -108,43 +115,11 @@ function displayMainSection(user) {
 
   // Retrieve weather and display
   retrieveWeather(user);
+  retrieveSongOfTheDay(user);
   retrieveSign(user);
   displayMeme();
-  displaypicture();
-
-  retrieveSongOfTheDay(user);
+  // displaypicture();
 }
-
-// User starsign
-function retrieveSign(user) {
-  const queryUrl = 
-  "https://aztro.sameerkumar.website?day=today&sign=" + 
-  user.sign;
-
-  fetch(queryUrl, {
-    method: "POST"
-  })
-  .then(function (response){
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    } 
-    return response.json();
-  })
-  .then (function (data){
-    displaySign(data);
-  })
-  .catch(function (error) {
-    console.log("Unable to retrieve sign");
-  });
-} 
-
-function displaySign(data) {
-  const signReading = document.createElement("p");
-  signReading.textContent = data.description;
-  signReadingEl.appendChild(signReading);
-
-}
-
 
 function retrieveWeather(user) {
   const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
@@ -165,7 +140,7 @@ function retrieveWeather(user) {
     })
     .then(function (data) {
       displayWeather(data);
-    })  
+    })
     .catch(function (error) {
       alert("Unable to retrieve data");
     });
@@ -193,7 +168,6 @@ function displayWeather(data) {
   temperature.textContent = "Temperature: " + data.main.temp + " °C";
   displayTimeAndWeather.appendChild(temperature);
 }
-
 
 function retrieveSongOfTheDay(user) {
   const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
@@ -228,113 +202,97 @@ function displaySongOfTheDay(dataSong) {
   iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
 }
 
+// User starsign
+function retrieveSign(user) {
+  const queryUrl =
+    "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
- function displayMeme(){
-fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en")    
-    .then(function(response) {
+  fetch(queryUrl, {
+    method: "POST",
+  })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
       return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
+      displaySign(data);
+    })
+    .catch(function (error) {
+      console.log("Unable to retrieve sign");
+    });
+}
+
+function displaySign(data) {
+  signReadingEl.innerHTML = "";
+  const signReading = document.createElement("p");
+  signReading.textContent = data.description;
+  signReadingEl.appendChild(signReading);
+}
+
+function displayMeme() {
+  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
       console.log(data);
       const jokePart1 = document.createElement("h3");
       const jokePart2 = document.createElement("h3");
 
-      jokePart1.textContent = "Joke of the day:"+"  "+ data.setup;
+      jokePart1.textContent = "Joke of the day:" + "  " + data.setup;
       jokePart2.textContent = data.delivery;
       console.log(data.setup);
       console.log(data.delivery);
 
       mainDisplayEl.appendChild(jokePart1);
       mainDisplayEl.appendChild(jokePart2);
-
-
     });
-  }
-  
-
-init();
-
-
-//Insult of the day//
-//Code failing due to CORS issue//
-
-/*var insultBox = document.getElementById('insult-otd');
-getInsult();
-
-function getInsult() {
-  var insultURL = "https://evilinsult.com/generate_insult.php?lang=en&type=json";
-
-fetch(insultURL)
-  .then(function(response) {
-  if (!response.ok) {
-    alert("Error: " + response.statusText);
-    return;
-  }
-  return response.json();
-  })  
-  .then(function() {
-    displayInsult();
-  })
-  .catch(function (error) {
-    alert("Data not retrievable");
-  });
 }
 
-function displayInsult() {
-  var insultContent = document.createElement('p');
-  insultContent.textContent = data.insult;
-  insultBox.appendChild(insultContent);
-} */
-
 //Activity of the day//
-const userFavActivity = [];
-userActivityEl.addEventListener("click", function (event) {
-  const userActSelect = event.target;
-
-  if (userActSelect.matches("button") === true) {
-    const userActivity = userActSelect.getAttribute("value");
-    userFavActivity.push(userActivity)
-  }
-  console.log(userFavActivity)
-})
 
 //connection to html ID//
-var activityBox = document.getElementById('activity-otd');
-console.log()
+var activityBox = document.getElementById("activity-otd");
+console.log();
 getActivity();
 
 //randomising activity from array created by buttons//
 var randomActivity =
-userFavActivity[Math.floor(Math.random()*userFavActivity.length)];
+  userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
 
 //API link//
 //userFavActivity will need to be altered so that multiple options can be selected//
 function getActivity() {
-  var activityURL = "http://www.boredapi.com/api/activity?type=" + randomActivity;
+  var activityURL =
+    "http://www.boredapi.com/api/activity?type=" + randomActivity;
 
-fetch(activityURL)
-  .then(function(response) {
-  if (!response.ok) {
-    alert("Error: " + response.statusText);
-    return;
-  }
-  return response.json();
-  })  
-  .then(function(data) {
-    displayActivity(data);
-  })
-  .catch(function (error) {
-    alert("Data not retrievable");
-  });
+  fetch(activityURL)
+    .then(function (response) {
+      if (!response.ok) {
+        alert("Error: " + response.statusText);
+        return;
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      displayActivity(data);
+    })
+    .catch(function (error) {
+      alert("Data not retrievable");
+    });
 }
 
 //Display function for activity API//
 function displayActivity(data) {
-  var activityContent = document.createElement('p');
+  var activityContent = document.createElement("p");
   activityContent.textContent = data.activity;
   activityBox.appendChild(activityContent);
 }
 
 //change text size for activity box title
-var activityBoxText = document.getElementById('activity')
+var activityBoxText = document.getElementById("activity");
 activityBoxText.setAttribute("style", "font-size: 25px; font-weight: bold");
+
+init();
