@@ -86,6 +86,8 @@ function displayMainSection(user) {
 
   retrieveWeather(user);
   retrieveSign(user);
+  displayMeme();
+  displaypicture();
 
   // const weather = data.main.temp;
   console.log(user);
@@ -141,7 +143,7 @@ function retrieveWeather(user) {
     })
     .then(function (data) {
       displayWeather(data);
-    })
+    })  
     .catch(function (error) {
       alert("Unable to retrieve data");
     });
@@ -152,24 +154,27 @@ function displayWeather(data) {
   temperature.textContent = "Temperature: " + data.main.temp + " °C";
   displayTimeAndWeather.appendChild(temperature);
 }
-//Form section: user fill the form and then information is storage in localstorage
 
-//then main display is shown
+ function displayMeme(){
+fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en")    
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      console.log(data);
+      const jokePart1 = document.createElement("h3");
+      const jokePart2 = document.createElement("h3");
 
-/*fetch(
-  "https://trailapi-trailapi.p.rapidapi.com/trails/explore/?lat=-37.0201&lon=144.9646",
-  {
-    method: "GET",
-    headers: {
-      "x-rapidapi-host": "trailapi-trailapi.p.rapidapi.com",
-      "x-rapidapi-key": "18b41c1c7bmsheb630e6f2195bcfp1e66f6jsn0071376690aa",
-    },
+      jokePart1.textContent = "Joke of the day:"+"  "+ data.setup;
+      jokePart2.textContent = data.delivery;
+      console.log(data.setup);
+      console.log(data.delivery);
+
+      mainDisplayEl.appendChild(jokePart1);
+      mainDisplayEl.appendChild(jokePart2);
+
+
+    });
   }
-)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((err) => {
-    console.error(err);
-  });*/
+  
 init();
