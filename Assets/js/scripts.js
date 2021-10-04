@@ -4,15 +4,16 @@ const formPreferencesEl = document.querySelector("#form-section");
 const formBtnEl = document.querySelector("#form-btn");
 const mainDisplayEl = document.querySelector("#main");
 const userNameEl = document.querySelector("#username");
-const dateOfBirthEl = document.querySelector("#DOB");
+const signEl = document.querySelector("#sign");
 const userLocationEl = document.querySelector("#location");
 const userMusicEl = document.querySelector("#user-music");
 const headerEl = document.querySelector("#header");
 const headerTitleEl = document.querySelector("#header-h1");
 const preferenceBtnEl = document.querySelector("#preferences");
 const displayTimeAndWeather = document.querySelector("#display-weather-time");
+const signReadingEl = document.querySelector("#sign-reading");
 
-// User enters and see a ewlcome header and the about section
+// User enters and see a welcome header and the about section
 
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -56,7 +57,7 @@ function displayForm() {
 function getFormValues() {
   const user = {
     name: userNameEl.value,
-    dob: dateOfBirthEl.value,
+    sign: signEl.value,
     location: userLocationEl.value,
     // music: musicOptions(),
   };
@@ -64,6 +65,8 @@ function getFormValues() {
   setUserPreferences(user);
 
   displayMainSection(user);
+
+  console.log(user);  
 }
 
 function displayMainSection(user) {
@@ -82,10 +85,42 @@ function displayMainSection(user) {
   displayTimeAndWeather.appendChild(currentDate);
 
   retrieveWeather(user);
+  retrieveSign(user);
 
   // const weather = data.main.temp;
   console.log(user);
 }
+
+// User starsign
+function retrieveSign(user) {
+  const queryUrl = 
+  "https://aztro.sameerkumar.website?day=today&sign=" + 
+  user.sign;
+
+  fetch(queryUrl, {
+    method: "POST"
+  })
+  .then(function (response){
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    } 
+    return response.json();
+  })
+  .then (function (data){
+    displaySign(data);
+  })
+  .catch(function (error) {
+    console.log("Unable to retrieve sign");
+  });
+} 
+
+function displaySign(data) {
+  const signReading = document.createElement("p");
+  signReading.textContent = data.description;
+  signReadingEl.appendChild(signReading);
+
+}
+
 
 function retrieveWeather(user) {
   const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
