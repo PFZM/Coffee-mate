@@ -16,7 +16,9 @@ const userActivityEl = document.querySelector("#user-activity");
 const cancelBtnEl = document.querySelector("#cancel-btn");
 const iframeSong = document.querySelector("#iframe-song");
 const signReadingEl = document.querySelector("#sign-reading");
-var activityBox = document.getElementById("activity-otd");
+const activityOfTheDatEl = document.querySelector("#activity");
+const jokeOneEl = document.querySelector("#joke-1");
+const jokeTwoEl = document.querySelector("#joke-2");
 
 
 // Event listeners of the application
@@ -52,7 +54,7 @@ userActivityEl.addEventListener("click", function (event) {
 
 // line 53 - 60: functions to set and get the information from localstorage
 function getUserPreferences() {
-  return JSON.parse(localStorage.getItem("user")) || [];
+  return JSON.parse(localStorage.getItem("user")) || {};
 }
 
 function setUserPreferences(user) {
@@ -62,7 +64,7 @@ function setUserPreferences(user) {
 //Check if there is the user information in local storage, if not => go to about section if yes => go to main display
 function init() {
   const user = getUserPreferences();
-  if (user.length !== 0) {
+  if (Object.keys(user).length !== 0) {
     displayMainSection(user);
   }
   return;
@@ -128,7 +130,7 @@ function displayMainSection(user) {
   retrieveSongOfTheDay(user);
   retrieveSign(user);
   displayJoke();
-  getActivity();
+  getActivity(user);
 
   // displayPicture();
 }
@@ -136,7 +138,7 @@ function displayMainSection(user) {
 function retrieveWeather(user) {
   const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
   const queryURL =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     user.location +
     "&units=metric" +
     "&appid=" +
@@ -145,8 +147,10 @@ function retrieveWeather(user) {
   fetch(queryURL)
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
-        return;
+
+        console.log("Error: " + response.statusText);
+        throw new Error();
+
       }
       return response.json();
     })
@@ -154,7 +158,7 @@ function retrieveWeather(user) {
       displayWeather(data);
     })
     .catch(function (error) {
-      alert("Unable to retrieve data");
+      console.log(error);
     });
 }
 
@@ -182,13 +186,36 @@ function displayWeather(data) {
 }
 
 function retrieveSongOfTheDay(user) {
-  const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+
   const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
   const classicPlayList = "PL2788304DC59DBEB4";
   const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
   const latinPlayList = "PLkqz3S84Tw-QoDzNr9VvMXxUTQ7TkANO_";
 
-  console.log(user.music);
+  let userPlaylist;
+
+  switch (user.music) {
+    case "rock": {
+      userPlaylist = rockPlayList;
+      break;
+    }
+    case "classic": {
+      userPlaylist = classicPlayList;
+      break;
+    }
+    case "funk": {
+      userPlaylist = funkPlayList;
+      break;
+    }
+    case "latin": {
+      userPlaylist = latinPlayList;
+      break;
+    }
+    default: {
+      throw new Error("invalid playlist option");
+    }
+  }
+
 
   const MusicQueryURL =
     "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K&maxResults=25&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
@@ -196,8 +223,10 @@ function retrieveSongOfTheDay(user) {
   https: fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
-        return;
+
+        console.log(response);
+        throw new Error();
+
       }
       return response.json();
     })
@@ -206,12 +235,18 @@ function retrieveSongOfTheDay(user) {
       displaySongOfTheDay(dataSong);
     })
     .catch(function (error) {
-      alert("Unable to retrieve data");
+      console.log(error);
     });
 }
 
 function displaySongOfTheDay(dataSong) {
-  iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
+
+  const i = Math.floor(Math.random() * 30);
+
+  iframeSong.src =
+    "https://www.youtube.com/embed/" +
+    dataSong.items[i].snippet.resourceId.videoId;
+
 }
 
 // User starsign
@@ -219,20 +254,23 @@ function retrieveSign(user) {
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
+  console.log(user);
+
   fetch(queryUrl, {
     method: "POST",
   })
     .then(function (response) {
       if (!response.ok) {
-        throw new Error("Network response was not ok");
-      } 
+        console.log(response);
+        throw new Error();
+      }
       return response.json();
     })
     .then(function (data) {
       displaySign(data);
     })
     .catch(function (error) {
-      console.log("Unable to retrieve sign");
+      console.log(error);
     });
 }
 
@@ -247,60 +285,49 @@ function displayJoke() {
   fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode")
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
-        return;
+
+        console.log(response);
+
+        throw new Error();
+
       }
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
-      const jokeTitle = document.createElement("h3");
-      const jokePart1 = document.createElement("p");
-      const jokePart2 = document.createElement("p");
-      jokeTitle.textContent = "joke of the day:";
-      jokePart1.textContent = data.setup;
-      jokePart2.textContent = data.delivery;
-      console.log(data.setup);
-      console.log(data.delivery);
-      mainDisplayEl.appendChild(jokeTitle);
-      mainDisplayEl.appendChild(jokePart1);
-      mainDisplayEl.appendChild(jokePart2);
+
+      jokeOneEl.textContent = data.setup;
+      jokeTwoEl.textContent = data.delivery;
+
     })
     .catch(function (error) {
-      alert("Data not retrievable");
+      console.log(error);
     });
 }
 
-//Activity of the day//
+function getActivity(user) {
+  var activityURL =
+    "https://www.boredapi.com/api/activity?type=" + user.activity;
 
-//userFavActivity will need to be altered so that multiple options can be selected//
-function getActivity() {
-
-  var activityURL = "http://www.boredapi.com/api/activity?type=" + userFavActivity;
 
   fetch(activityURL)
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
-        return;
+
+        console.log(response);
+        throw new Error();
+
       }
       return response.json();
     })
     .then(function (data) {
-          var activityContent = document.createElement("p");
 
-          activityContent.textContent = data.activity ;
-          console.log(activityContent);
-          activityBox.appendChild(activityContent);
+      activityOfTheDatEl.textContent = data.activity;
+
     })
     .catch(function (error) {
-      alert("Data not retrievable");
+      console.log(error);
     });
 }
 
-
-//change text size for activity box title
-var activityBoxText = document.getElementsByClassName(".maindisplay-content");
-activityBoxText.setAttribute("style", "font-size: 25px; font-weight: bold");
 
 init();
