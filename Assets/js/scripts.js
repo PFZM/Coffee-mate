@@ -16,7 +16,9 @@ const userActivityEl = document.querySelector("#user-activity");
 const cancelBtnEl = document.querySelector("#cancel-btn");
 const iframeSong = document.querySelector("#iframe-song");
 const signReadingEl = document.querySelector("#sign-reading");
-var activityBox = document.getElementById("activity-otd");
+const activityOfTheDatEl = document.querySelector("#activity");
+const jokeOneEl = document.querySelector("#joke-1");
+const jokeTwoEl = document.querySelector("#joke-2");
 
 // Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
@@ -50,7 +52,7 @@ userActivityEl.addEventListener("click", function (event) {
 
 // line 53 - 60: functions to set and get the information from localstorage
 function getUserPreferences() {
-  return JSON.parse(localStorage.getItem("user")) || [];
+  return JSON.parse(localStorage.getItem("user")) || {};
 }
 
 function setUserPreferences(user) {
@@ -60,7 +62,7 @@ function setUserPreferences(user) {
 //Check if there is the user information in local storage, if not => go to about section if yes => go to main display
 function init() {
   const user = getUserPreferences();
-  if (user.length !== 0) {
+  if (Object.keys(user).length !== 0) {
     displayMainSection(user);
   }
   return;
@@ -90,8 +92,6 @@ function getFormValues() {
     music: favoriteGenre,
     activity: userFavActivity,
   };
-
-  console.log(user.music);
 
   // validation that user filled all form fields
   if (
@@ -128,7 +128,7 @@ function displayMainSection(user) {
   retrieveSongOfTheDay(user);
   retrieveSign(user);
   displayJoke();
-  getActivity();
+  getActivity(user);
 
   // displayPicture();
 }
@@ -136,7 +136,7 @@ function displayMainSection(user) {
 function retrieveWeather(user) {
   const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
   const queryURL =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     user.location +
     "&units=metric" +
     "&appid=" +
@@ -145,7 +145,7 @@ function retrieveWeather(user) {
   fetch(queryURL)
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
+        console.log("Error: " + response.statusText);
         throw new Error();
       }
       return response.json();
@@ -154,7 +154,7 @@ function retrieveWeather(user) {
       displayWeather(data);
     })
     .catch(function (error) {
-      alert("Unable to retrieve data");
+      console.log(error);
     });
 }
 
@@ -182,14 +182,10 @@ function displayWeather(data) {
 }
 
 function retrieveSongOfTheDay(user) {
-  console.log(user);
-  // const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
   const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
   const classicPlayList = "PL2788304DC59DBEB4";
   const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
   const latinPlayList = "PLkqz3S84Tw-QoDzNr9VvMXxUTQ7TkANO_";
-
-  console.log(user.music);
 
   let userPlaylist;
 
@@ -223,7 +219,7 @@ function retrieveSongOfTheDay(user) {
   fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
+        console.log(response);
         throw new Error();
       }
       return response.json();
@@ -233,21 +229,16 @@ function retrieveSongOfTheDay(user) {
       displaySongOfTheDay(dataSong);
     })
     .catch(function (error) {
-      alert("Unable to retrieve data");
+      console.log(error);
     });
 }
 
 function displaySongOfTheDay(dataSong) {
   const i = Math.floor(Math.random() * 30);
-  console.log(i);
-  console.log(dataSong.items[i].snippet.resourceId.videoId);
 
   iframeSong.src =
     "https://www.youtube.com/embed/" +
     dataSong.items[i].snippet.resourceId.videoId;
-
-  console.log(iframeSong);
-  // iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
 }
 
 // User starsign
@@ -255,20 +246,23 @@ function retrieveSign(user) {
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
+  console.log(user);
+
   fetch(queryUrl, {
     method: "POST",
   })
     .then(function (response) {
       if (!response.ok) {
-        throw new Error("Network response was not ok");
-      } 
+        console.log(response);
+        throw new Error();
+      }
       return response.json();
     })
     .then(function (data) {
       displaySign(data);
     })
     .catch(function (error) {
-      console.log("Unable to retrieve sign");
+      console.log(error);
     });
 }
 
@@ -285,59 +279,39 @@ function displayJoke() {
   )
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
+        console.log(response);
+
         throw new Error();
       }
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
-      const jokePart1 = document.createElement("h3");
-      const jokePart2 = document.createElement("h3");
-
-      jokePart1.textContent = "Joke of the day:" + "  " + data.setup;
-      jokePart2.textContent = data.delivery;
-      console.log(data.setup);
-      console.log(data.delivery);
-
-      mainDisplayEl.appendChild(jokePart1);
-      mainDisplayEl.appendChild(jokePart2);
+      jokeOneEl.textContent = data.setup;
+      jokeTwoEl.textContent = data.delivery;
     })
     .catch(function (error) {
-      alert("Data not retrievable");
+      console.log(error);
     });
 }
 
-
-function getActivity() {
-  
-  //randomising activity from array created by buttons//
-
-  var activityURL = //"http://www.boredapi.com/api/activity?key=5881028";
-              "http://www.boredapi.com/api/activity?type=" + userFavActivity;
+function getActivity(user) {
+  var activityURL =
+    "https://www.boredapi.com/api/activity?type=" + user.activity;
 
   fetch(activityURL)
     .then(function (response) {
       if (!response.ok) {
-        alert("Error: " + response.statusText);
+        console.log(response);
         throw new Error();
       }
       return response.json();
     })
     .then(function (data) {
-      var activityContent = document.createElement("p");
-
-      activityContent.textContent = data.activity;
-      console.log(activityContent);
-      activityBox.appendChild(activityContent);
+      activityOfTheDatEl.textContent = data.activity;
     })
     .catch(function (error) {
-      alert("Data not retrievable");
+      console.log(error);
     });
 }
-
-//change text size for activity box title
-var activityBoxText = document.getElementById("activity");
-activityBoxText.setAttribute("style", "font-size: 25px; font-weight: bold");
 
 init();
