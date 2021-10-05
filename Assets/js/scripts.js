@@ -20,6 +20,7 @@ const activityOfTheDatEl = document.querySelector("#activity");
 const jokeOneEl = document.querySelector("#joke-1");
 const jokeTwoEl = document.querySelector("#joke-2");
 
+
 // Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -29,23 +30,24 @@ cancelBtnEl.addEventListener("click", function () {
   displayMainSection(user);
 });
 
-let favoriteGenre;
+const userFavGenres = [];
 userMusicEl.addEventListener("click", function (event) {
   const userSelection = event.target;
 
   if (userSelection.matches("button") === true) {
-    const userFavGenre = userSelection.getAttribute("value");
-    favoriteGenre = userFavGenre;
+    const userMusic = userSelection.getAttribute("value");
+    userFavGenres.push(userMusic);
+    console.log(userFavGenres);
   }
 });
 
-let userFavActivity;
+const userFavActivity = [];
 userActivityEl.addEventListener("click", function (event) {
   const userActSelect = event.target;
 
   if (userActSelect.matches("button") === true) {
     const userActivity = userActSelect.getAttribute("value");
-    userFavActivity = userActivity;
+    userFavActivity.push(userActivity);
     console.log(userFavActivity);
   }
 });
@@ -89,7 +91,7 @@ function getFormValues() {
     name: userNameEl.value,
     sign: signEl.value,
     location: userLocationEl.value,
-    music: favoriteGenre,
+    music: userFavGenres,
     activity: userFavActivity,
   };
 
@@ -119,7 +121,7 @@ function displayMainSection(user) {
 
   // Header display
   headerTitleEl.textContent =
-    " Welcome " + user.name + ", enjoy your coffe mate!";
+    " Welcome " + user.name + "! Enjoy your coffee, mate!";
 
   preferenceBtnEl.classList = "btn";
 
@@ -145,8 +147,10 @@ function retrieveWeather(user) {
   fetch(queryURL)
     .then(function (response) {
       if (!response.ok) {
+
         console.log("Error: " + response.statusText);
         throw new Error();
+
       }
       return response.json();
     })
@@ -182,6 +186,7 @@ function displayWeather(data) {
 }
 
 function retrieveSongOfTheDay(user) {
+
   const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
   const classicPlayList = "PL2788304DC59DBEB4";
   const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
@@ -211,16 +216,17 @@ function retrieveSongOfTheDay(user) {
     }
   }
 
-  const MusicQueryURL =
-    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" +
-    userPlaylist +
-    "&maxResults=30&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
 
-  fetch(MusicQueryURL)
+  const MusicQueryURL =
+    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K&maxResults=25&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+
+  https: fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
+
         console.log(response);
         throw new Error();
+
       }
       return response.json();
     })
@@ -234,11 +240,13 @@ function retrieveSongOfTheDay(user) {
 }
 
 function displaySongOfTheDay(dataSong) {
+
   const i = Math.floor(Math.random() * 30);
 
   iframeSong.src =
     "https://www.youtube.com/embed/" +
     dataSong.items[i].snippet.resourceId.videoId;
+
 }
 
 // User starsign
@@ -274,20 +282,22 @@ function displaySign(data) {
 }
 
 function displayJoke() {
-  fetch(
-    "https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode"
-  )
+  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode")
     .then(function (response) {
       if (!response.ok) {
+
         console.log(response);
 
         throw new Error();
+
       }
       return response.json();
     })
     .then(function (data) {
+
       jokeOneEl.textContent = data.setup;
       jokeTwoEl.textContent = data.delivery;
+
     })
     .catch(function (error) {
       console.log(error);
@@ -298,20 +308,26 @@ function getActivity(user) {
   var activityURL =
     "https://www.boredapi.com/api/activity?type=" + user.activity;
 
+
   fetch(activityURL)
     .then(function (response) {
       if (!response.ok) {
+
         console.log(response);
         throw new Error();
+
       }
       return response.json();
     })
     .then(function (data) {
+
       activityOfTheDatEl.textContent = data.activity;
+
     })
     .catch(function (error) {
       console.log(error);
     });
 }
+
 
 init();

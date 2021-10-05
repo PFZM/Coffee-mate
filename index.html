@@ -14,8 +14,10 @@
     <!-- Header -->
     <header id="header">
       <button id="preferences" class="hide">Change my preferences</button>
-      <h1 id="header-h1">Coffee Mate!</h1>
-      <p>How should I feel today?</p>
+      <div class="headerTitle">
+        <h1 id="header-h1">Coffee Mate!</h1>
+        <p>How should I feel today?</p>
+      </div>
       <div id="display-weather-time" class="weather-display"></div>
     </header>
 
@@ -37,8 +39,7 @@
             id="username"
             type="text"
             class="form-input"
-            required
-          />
+            required/>
 
           <label class="form-label" for="sign">What's your starsign?</label>
           <!-- <input name="DOB" id="DOB" type="date" class="form-input" required /> -->
@@ -71,17 +72,13 @@
           <div id="user-music" class="btn-section">
 
             <button type="button" value="rock" class="form-btn">Rock</button>
-            <button type="button" value="classic" class="form-btn">
-              Classic
-            </button>
+            <button type="button" value="classic" class="form-btn">Classic</button>
             <button type="button" value="funk" class="form-btn">Funk</button>
             <button type="button" value="latin" class="form-btn">Latin</button>
           </div>
 
-          <label class="form-label" for="activity-form"
+          <label class="form-label" for="activity-form">What types of activities do you enjoy?</label>
 
-            >What types of activities do you enjoy?</label
-          >
           <!--Added Id to div and added button types and values-->
           <div id="user-activity" class="btn-section">
             <button type='button' value="education" class="form-btn">Education</button>
@@ -107,11 +104,16 @@
           <h2>Song of the Day</h2>
           <iframe id="iframe-song"></iframe>
         </div>
-        <div id="horoscope" class="maindisplay-content">Horoscope<div id="sign-reading"></div>
+        <br>
+        <div id="horoscope" class="maindisplay-content">
+          <h2>Horoscope</h2><div id="sign-reading">
+        </div>
+        <br>
        <!-- <div id="insult-otd" class="maindisplay-content">Insult of the Day</div>
         <div id="motquote-otd" class="maindisplay-content">
           Motivational Quote of the Day
         </div>-->
+
         <div id="joke-otd" class="maindisplay-content">
           <h2>Joke of the day: </h2>
           <p id="joke-1"></p>
@@ -121,10 +123,13 @@
           <h2>Activity of the day: </h2>
           <p id="activity"></p>
         </div>
+
       </section>
     </main>
 
-    <footer class="footer">Powered by ☕ & ❤️</footer>
+    <footer class="footer">
+      <p>Powered by ☕ & ❤️</p>
+    </footer>
 
     <script src="./Assets/js/scripts.js"></script>
   </body>
