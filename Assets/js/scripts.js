@@ -18,6 +18,7 @@ const iframeSong = document.querySelector("#iframe-song");
 const signReadingEl = document.querySelector("#sign-reading");
 var activityBox = document.getElementById("activity-otd");
 
+
 // Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -27,23 +28,24 @@ cancelBtnEl.addEventListener("click", function () {
   displayMainSection(user);
 });
 
-let favoriteGenre;
+const userFavGenres = [];
 userMusicEl.addEventListener("click", function (event) {
   const userSelection = event.target;
 
   if (userSelection.matches("button") === true) {
-    const userFavGenre = userSelection.getAttribute("value");
-    favoriteGenre = userFavGenre;
+    const userMusic = userSelection.getAttribute("value");
+    userFavGenres.push(userMusic);
+    console.log(userFavGenres);
   }
 });
 
-let userFavActivity;
+const userFavActivity = [];
 userActivityEl.addEventListener("click", function (event) {
   const userActSelect = event.target;
 
   if (userActSelect.matches("button") === true) {
     const userActivity = userActSelect.getAttribute("value");
-    userFavActivity = userActivity;
+    userFavActivity.push(userActivity);
     console.log(userFavActivity);
   }
 });
@@ -87,11 +89,9 @@ function getFormValues() {
     name: userNameEl.value,
     sign: signEl.value,
     location: userLocationEl.value,
-    music: favoriteGenre,
+    music: userFavGenres,
     activity: userFavActivity,
   };
-
-  console.log(user.music);
 
   // validation that user filled all form fields
   if (
@@ -119,7 +119,7 @@ function displayMainSection(user) {
 
   // Header display
   headerTitleEl.textContent =
-    " Welcome " + user.name + ", enjoy your coffe mate!";
+    " Welcome " + user.name + "! Enjoy your coffee, mate!";
 
   preferenceBtnEl.classList = "btn";
 
@@ -146,7 +146,7 @@ function retrieveWeather(user) {
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        throw new Error();
+        return;
       }
       return response.json();
     })
@@ -182,8 +182,7 @@ function displayWeather(data) {
 }
 
 function retrieveSongOfTheDay(user) {
-  console.log(user);
-  // const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+  const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
   const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
   const classicPlayList = "PL2788304DC59DBEB4";
   const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
@@ -191,40 +190,14 @@ function retrieveSongOfTheDay(user) {
 
   console.log(user.music);
 
-  let userPlaylist;
-
-  switch (user.music) {
-    case "rock": {
-      userPlaylist = rockPlayList;
-      break;
-    }
-    case "classic": {
-      userPlaylist = classicPlayList;
-      break;
-    }
-    case "funk": {
-      userPlaylist = funkPlayList;
-      break;
-    }
-    case "latin": {
-      userPlaylist = latinPlayList;
-      break;
-    }
-    default: {
-      throw new Error("invalid playlist option");
-    }
-  }
-
   const MusicQueryURL =
-    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" +
-    userPlaylist +
-    "&maxResults=30&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K&maxResults=25&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
 
-  fetch(MusicQueryURL)
+  https: fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        throw new Error();
+        return;
       }
       return response.json();
     })
@@ -238,16 +211,7 @@ function retrieveSongOfTheDay(user) {
 }
 
 function displaySongOfTheDay(dataSong) {
-  const i = Math.floor(Math.random() * 30);
-  console.log(i);
-  console.log(dataSong.items[i].snippet.resourceId.videoId);
-
-  iframeSong.src =
-    "https://www.youtube.com/embed/" +
-    dataSong.items[i].snippet.resourceId.videoId;
-
-  console.log(iframeSong);
-  // iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
+  iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
 }
 
 // User starsign
@@ -280,13 +244,11 @@ function displaySign(data) {
 }
 
 function displayJoke() {
-  fetch(
-    "https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode"
-  )
+  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode")
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        throw new Error();
+        return;
       }
       return response.json();
     })
@@ -309,36 +271,36 @@ function displayJoke() {
     });
 }
 
+//Activity of the day//
 
+//userFavActivity will need to be altered so that multiple options can be selected//
 function getActivity() {
-  
-  //randomising activity from array created by buttons//
 
-  var activityURL = //"http://www.boredapi.com/api/activity?key=5881028";
-              "http://www.boredapi.com/api/activity?type=" + userFavActivity;
+  var activityURL = "http://www.boredapi.com/api/activity?type=" + userFavActivity;
 
   fetch(activityURL)
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        throw new Error();
+        return;
       }
       return response.json();
     })
     .then(function (data) {
-      var activityContent = document.createElement("p");
+          var activityContent = document.createElement("p");
 
-      activityContent.textContent = data.activity;
-      console.log(activityContent);
-      activityBox.appendChild(activityContent);
+          activityContent.textContent = data.activity ;
+          console.log(activityContent);
+          activityBox.appendChild(activityContent);
     })
     .catch(function (error) {
       alert("Data not retrievable");
     });
 }
 
+
 //change text size for activity box title
-var activityBoxText = document.getElementById("activity");
+var activityBoxText = document.getElementsByClassName(".maindisplay-content");
 activityBoxText.setAttribute("style", "font-size: 25px; font-weight: bold");
 
 init();
