@@ -18,7 +18,6 @@ const iframeSong = document.querySelector("#iframe-song");
 const signReadingEl = document.querySelector("#sign-reading");
 var activityBox = document.getElementById("activity-otd");
 
-
 // Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -28,24 +27,23 @@ cancelBtnEl.addEventListener("click", function () {
   displayMainSection(user);
 });
 
-const userFavGenres = [];
+let favoriteGenre;
 userMusicEl.addEventListener("click", function (event) {
   const userSelection = event.target;
 
   if (userSelection.matches("button") === true) {
-    const userMusic = userSelection.getAttribute("value");
-    userFavGenres.push(userMusic);
-    console.log(userFavGenres);
+    const userFavGenre = userSelection.getAttribute("value");
+    favoriteGenre = userFavGenre;
   }
 });
 
-const userFavActivity = [];
+let userFavActivity;
 userActivityEl.addEventListener("click", function (event) {
   const userActSelect = event.target;
 
   if (userActSelect.matches("button") === true) {
     const userActivity = userActSelect.getAttribute("value");
-    userFavActivity.push(userActivity);
+    userFavActivity = userActivity;
     console.log(userFavActivity);
   }
 });
@@ -89,9 +87,11 @@ function getFormValues() {
     name: userNameEl.value,
     sign: signEl.value,
     location: userLocationEl.value,
-    music: userFavGenres,
+    music: favoriteGenre,
     activity: userFavActivity,
   };
+
+  console.log(user.music);
 
   // validation that user filled all form fields
   if (
@@ -146,7 +146,7 @@ function retrieveWeather(user) {
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        return;
+        throw new Error();
       }
       return response.json();
     })
@@ -182,7 +182,8 @@ function displayWeather(data) {
 }
 
 function retrieveSongOfTheDay(user) {
-  const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+  console.log(user);
+  // const APIKeyYoutube = "AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
   const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
   const classicPlayList = "PL2788304DC59DBEB4";
   const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
@@ -190,14 +191,40 @@ function retrieveSongOfTheDay(user) {
 
   console.log(user.music);
 
-  const MusicQueryURL =
-    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K&maxResults=25&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+  let userPlaylist;
 
-  https: fetch(MusicQueryURL)
+  switch (user.music) {
+    case "rock": {
+      userPlaylist = rockPlayList;
+      break;
+    }
+    case "classic": {
+      userPlaylist = classicPlayList;
+      break;
+    }
+    case "funk": {
+      userPlaylist = funkPlayList;
+      break;
+    }
+    case "latin": {
+      userPlaylist = latinPlayList;
+      break;
+    }
+    default: {
+      throw new Error("invalid playlist option");
+    }
+  }
+
+  const MusicQueryURL =
+    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" +
+    userPlaylist +
+    "&maxResults=30&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+
+  fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        return;
+        throw new Error();
       }
       return response.json();
     })
@@ -211,7 +238,16 @@ function retrieveSongOfTheDay(user) {
 }
 
 function displaySongOfTheDay(dataSong) {
-  iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
+  const i = Math.floor(Math.random() * 30);
+  console.log(i);
+  console.log(dataSong.items[i].snippet.resourceId.videoId);
+
+  iframeSong.src =
+    "https://www.youtube.com/embed/" +
+    dataSong.items[i].snippet.resourceId.videoId;
+
+  console.log(iframeSong);
+  // iframeSong.src = "https://www.youtube.com/embed/6SFNW5F8K9Y";
 }
 
 // User starsign
@@ -244,11 +280,13 @@ function displaySign(data) {
 }
 
 function displayJoke() {
-  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode")
+  fetch(
+    "https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode"
+  )
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        return;
+        throw new Error();
       }
       return response.json();
     })
@@ -274,29 +312,36 @@ function displayJoke() {
 function getActivity() {
   
   //randomising activity from array created by buttons//
+
+  // var randomActivity = userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
+  console.log(userFavActivity);
+
+  var activityURL = "http://www.boredapi.com/api/activity?key=5881028";
+  //  "http://www.boredapi.com/api/activity?type=" + randomActivity;
+
      
   var activityURL = "http://www.boredapi.com/api/activity?type=" + userFavActivity;
+
 
   fetch(activityURL)
     .then(function (response) {
       if (!response.ok) {
         alert("Error: " + response.statusText);
-        return;
+        throw new Error();
       }
       return response.json();
     })
     .then(function (data) {
-          var activityContent = document.createElement("p");
+      var activityContent = document.createElement("p");
 
-          activityContent.textContent = data.activity ;
-          console.log(activityContent);
-          activityBox.appendChild(activityContent);
+      activityContent.textContent = data.activity;
+      console.log(activityContent);
+      activityBox.appendChild(activityContent);
     })
     .catch(function (error) {
       alert("Data not retrievable");
     });
 }
-
 
 //change text size for activity box title
 var activityBoxText = document.getElementById("activity");
