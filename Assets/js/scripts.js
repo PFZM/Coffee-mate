@@ -261,7 +261,7 @@ function retrieveSign(user) {
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
-      }
+      } 
       return response.json();
     })
     .then(function (data) {
@@ -313,12 +313,8 @@ function getActivity() {
   
   //randomising activity from array created by buttons//
 
-  // var randomActivity = userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
-  console.log(userFavActivity);
-
-
-  var activityURL = "http://www.boredapi.com/api/activity?type=" + userFavActivity;
-
+  var activityURL = //"http://www.boredapi.com/api/activity?key=5881028";
+              "http://www.boredapi.com/api/activity?type=" + userFavActivity;
 
   fetch(activityURL)
     .then(function (response) {
