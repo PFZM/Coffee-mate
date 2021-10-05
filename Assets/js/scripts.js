@@ -316,10 +316,7 @@ function getActivity() {
   // var randomActivity = userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
   console.log(userFavActivity);
 
-  var activityURL = "http://www.boredapi.com/api/activity?key=5881028";
-  //  "http://www.boredapi.com/api/activity?type=" + randomActivity;
 
-     
   var activityURL = "http://www.boredapi.com/api/activity?type=" + userFavActivity;
 
 
