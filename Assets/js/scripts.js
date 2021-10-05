@@ -225,7 +225,7 @@ function retrieveSign(user) {
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
-      }
+      } 
       return response.json();
     })
     .then(function (data) {
@@ -254,14 +254,15 @@ function displayJoke() {
     })
     .then(function (data) {
       console.log(data);
-      const jokePart1 = document.createElement("h2");
+      const jokeTitle = document.createElement("h3");
+      const jokePart1 = document.createElement("p");
       const jokePart2 = document.createElement("p");
-
-      jokePart1.textContent = "Joke of the day:" + "  " + data.setup;
+      jokeTitle.textContent = "joke of the day:";
+      jokePart1.textContent = data.setup;
       jokePart2.textContent = data.delivery;
       console.log(data.setup);
       console.log(data.delivery);
-
+      mainDisplayEl.appendChild(jokeTitle);
       mainDisplayEl.appendChild(jokePart1);
       mainDisplayEl.appendChild(jokePart2);
     })
@@ -274,12 +275,8 @@ function displayJoke() {
 
 //userFavActivity will need to be altered so that multiple options can be selected//
 function getActivity() {
-  //randomising activity from array created by buttons//
-     // var randomActivity = userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
-      console.log(userFavActivity);
 
-  var activityURL = "http://www.boredapi.com/api/activity?key=5881028";
-               //  "http://www.boredapi.com/api/activity?type=" + randomActivity;
+  var activityURL = "http://www.boredapi.com/api/activity?type=" + userFavActivity;
 
   fetch(activityURL)
     .then(function (response) {
