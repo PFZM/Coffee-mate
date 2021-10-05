@@ -292,14 +292,15 @@ function displayJoke() {
     })
     .then(function (data) {
       console.log(data);
-      const jokePart1 = document.createElement("h3");
-      const jokePart2 = document.createElement("h3");
-
-      jokePart1.textContent = "Joke of the day:" + "  " + data.setup;
+      const jokeTitle = document.createElement("h3");
+      const jokePart1 = document.createElement("p");
+      const jokePart2 = document.createElement("p");
+      jokeTitle.textContent = "joke of the day:";
+      jokePart1.textContent = data.setup;
       jokePart2.textContent = data.delivery;
       console.log(data.setup);
       console.log(data.delivery);
-
+      mainDisplayEl.appendChild(jokeTitle);
       mainDisplayEl.appendChild(jokePart1);
       mainDisplayEl.appendChild(jokePart2);
     })
