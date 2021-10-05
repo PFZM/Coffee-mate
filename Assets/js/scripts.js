@@ -308,16 +308,20 @@ function displayJoke() {
     });
 }
 
-//Activity of the day//
 
-//userFavActivity will need to be altered so that multiple options can be selected//
 function getActivity() {
+  
   //randomising activity from array created by buttons//
+
   // var randomActivity = userFavActivity[Math.floor(Math.random() * userFavActivity.length)];
   console.log(userFavActivity);
 
   var activityURL = "http://www.boredapi.com/api/activity?key=5881028";
   //  "http://www.boredapi.com/api/activity?type=" + randomActivity;
+
+     
+  var activityURL = "http://www.boredapi.com/api/activity?type=" + userFavActivity;
+
 
   fetch(activityURL)
     .then(function (response) {
