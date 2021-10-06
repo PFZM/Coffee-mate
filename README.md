@@ -8,7 +8,7 @@ Integrants:
 
 ## Project Title:
 
-Coffe Morning App
+Coffee Morning App
 
 ## Project description:
 
@@ -23,7 +23,7 @@ Activity type preference => to have a relevant type of activity suggested
 
 All the above items will be displayed in an interactive way. The app will also display the following random item:
 
-- Insult of the day
+- Joke of the day
 
 Information and preferences will be stored locally, so the user don't need to input them every time, user also has access to modify them at any time.
 
@@ -35,20 +35,17 @@ I WANT to be able to tailor the information specifically to myself through a for
 I WANT to open an app and see the weather for today.
 I WANT to listen the "song of the day" from my favorite music genre.
 I WANT to see the horoscope of the day according to my sign.
+I WANT to see a joke of the day.
 I WANT to see a suggestion for an activity to do that day.
-I WANT to have the insult of the day.
+I WANT to be able to change my preference anytime.
 
 SO THAT I can start my day in a fun way and in a good mood.
-
-## Wireframe:
 
 ## APIs to be used:
 
 - Open Weather Map (Weather conditions)
 - Aztro API (Horoscope)
 - Youtube (Song of the Day)
-- Activity of the day
-- Insult of the day
+- Joke API (Joke of the day)
 - Bored API (Activity of the day)
 
-## List of tasks:

@@ -39,27 +39,53 @@
             id="username"
             type="text"
             class="form-input"
-            required/>
+            required
+          />
 
           <label class="form-label" for="sign">What's your starsign?</label>
           <!-- <input name="DOB" id="DOB" type="date" class="form-input" required /> -->
           <select name="sign" class="starsigndropdown" id="sign">
-            <option class="signoption" value="Aquarius">Aquarius (Jan. 20 - Feb. 18)</option>
-            <option class="signoption" value="Pisces">Pisces (Feb. 19 - March 20)</option>
-            <option class="signoption" value="Aries">Aries (March 21 - April 19)</option>
-            <option class="signoption" value="Taurus">Taurus (April 20 - May 20)</option>
-            <option class="signoption" value="Gemini">Gemini (May 21 - June 21)</option>
-            <option class="signoption" value="Cancer">Cancer (June 22 - July 22)</option>
-            <option class="signoption" value="Leo">Leo (July 23 - Aug. 22)</option>
-            <option class="signoption" value="Virgo">Virgo (Aug. 23 - Sept. 22)</option>
-            <option class="signoption" value="Libra">Libra (Sept. 23 - Oct. 23)</option>
-            <option class="signoption" value="Scorpio">Scorpio (Oct. 24 - Nov. 21)</option>
-            <option class="signoption" value="Sagittarius">Sagittarius (Nov. 22 - Dec. 21)</option>
-            <option class="signoption" value="Capricorn">Capricorn (Dec. 22 - Jan. 19)</option>
+            <option class="signoption" value="Aquarius">
+              Aquarius (Jan. 20 - Feb. 18)
+            </option>
+            <option class="signoption" value="Pisces">
+              Pisces (Feb. 19 - March 20)
+            </option>
+            <option class="signoption" value="Aries">
+              Aries (March 21 - April 19)
+            </option>
+            <option class="signoption" value="Taurus">
+              Taurus (April 20 - May 20)
+            </option>
+            <option class="signoption" value="Gemini">
+              Gemini (May 21 - June 21)
+            </option>
+            <option class="signoption" value="Cancer">
+              Cancer (June 22 - July 22)
+            </option>
+            <option class="signoption" value="Leo">
+              Leo (July 23 - Aug. 22)
+            </option>
+            <option class="signoption" value="Virgo">
+              Virgo (Aug. 23 - Sept. 22)
+            </option>
+            <option class="signoption" value="Libra">
+              Libra (Sept. 23 - Oct. 23)
+            </option>
+            <option class="signoption" value="Scorpio">
+              Scorpio (Oct. 24 - Nov. 21)
+            </option>
+            <option class="signoption" value="Sagittarius">
+              Sagittarius (Nov. 22 - Dec. 21)
+            </option>
+            <option class="signoption" value="Capricorn">
+              Capricorn (Dec. 22 - Jan. 19)
+            </option>
           </select>
 
           <label class="form-label" for="location"
-            >In which city do you live?</label>
+            >In which city do you live?</label
+          >
           <input
             name="location"
             id="location"
@@ -68,28 +94,46 @@
             required
           />
           <label class="form-label" for="music-genre"
-            >What's your favourite music genre?</label>
+            >What's your favourite music genre?</label
+          >
           <div id="user-music" class="btn-section">
-
             <button type="button" value="rock" class="form-btn">Rock</button>
-            <button type="button" value="classic" class="form-btn">Classic</button>
+            <button type="button" value="classic" class="form-btn">
+              Classic
+            </button>
             <button type="button" value="funk" class="form-btn">Funk</button>
             <button type="button" value="latin" class="form-btn">Latin</button>
           </div>
 
-          <label class="form-label" for="activity-form">What types of activities do you enjoy?</label>
+          <label class="form-label" for="activity-form"
+            >What types of activities do you enjoy?</label
+          >
 
           <!--Added Id to div and added button types and values-->
           <div id="user-activity" class="btn-section">
-            <button type='button' value="education" class="form-btn">Education</button>
-            <button type='button' value="recreational" class="form-btn">Recreational</button>
-            <button type='button' value="social" class="form-btn">Social</button>
-            <button type='button' value="diy" class="form-btn">DIY</button>
-            <button type='button' value="charity" class="form-btn">Charity</button>
-            <button type='button' value="busywork" class="form-btn">Busywork</button>
-            <button type='button' value="cooking" class="form-btn">Cooking</button>
-            <button type='button' value="relaxation" class="form-btn">Relaxation</button>
-            <button type='button' value="music" class="form-btn">Music</button>
+            <button type="button" value="education" class="form-btn">
+              Education
+            </button>
+            <button type="button" value="recreational" class="form-btn">
+              Recreational
+            </button>
+            <button type="button" value="social" class="form-btn">
+              Social
+            </button>
+            <button type="button" value="diy" class="form-btn">DIY</button>
+            <button type="button" value="charity" class="form-btn">
+              Charity
+            </button>
+            <button type="button" value="busywork" class="form-btn">
+              Busywork
+            </button>
+            <button type="button" value="cooking" class="form-btn">
+              Cooking
+            </button>
+            <button type="button" value="relaxation" class="form-btn">
+              Relaxation
+            </button>
+            <button type="button" value="music" class="form-btn">Music</button>
           </div>
 
           <button type="submit" id="form-btn" class="btn">Submit</button>
@@ -99,27 +143,25 @@
 
       <!-- Display Main Page -->
       <section id="main" class="hide">
-      
         <div id="song-otd" class="maindisplay-content">
           <h2>Song of the Day</h2>
           <iframe id="iframe-song"></iframe>
         </div>
-        <br>
+        <br />
         <div id="horoscope" class="maindisplay-content">
-        <div id="sign-reading">
-        </div></div>
-        <br>
+          <div id="sign-reading"></div>
+        </div>
+        <br />
         <div id="joke-otd" class="maindisplay-content">
-          <h2>Joke of the day </h2> 
+          <h2>Joke of the day</h2>
           <p id="joke-1"></p>
           <p id="joke-2"></p>
         </div>
-        <br>
+        <br />
         <div id="activity-otd" class="maindisplay-content">
-          <h2>Activity of the day </h2>
+          <h2>Activity of the day</h2>
           <p id="activity"></p>
         </div>
-
       </section>
     </main>
 

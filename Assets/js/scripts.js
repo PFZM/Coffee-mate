@@ -20,7 +20,6 @@ const activityOfTheDatEl = document.querySelector("#activity");
 const jokeOneEl = document.querySelector("#joke-1");
 const jokeTwoEl = document.querySelector("#joke-2");
 
-
 // Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -30,29 +29,27 @@ cancelBtnEl.addEventListener("click", function () {
   displayMainSection(user);
 });
 
-const userFavGenres = [];
+// Event delegation for music selection buttons
+let userFavGenres;
 userMusicEl.addEventListener("click", function (event) {
   const userSelection = event.target;
 
   if (userSelection.matches("button") === true) {
-    const userMusic = userSelection.getAttribute("value");
-    userFavGenres.push(userMusic);
-    console.log(userFavGenres);
+    userFavGenres = userSelection.getAttribute("value");
   }
 });
 
-const userFavActivity = [];
+// Event delegation for activities selection buttons
+let userFavActivity;
 userActivityEl.addEventListener("click", function (event) {
   const userActSelect = event.target;
 
   if (userActSelect.matches("button") === true) {
-    const userActivity = userActSelect.getAttribute("value");
-    userFavActivity.push(userActivity);
-    console.log(userFavActivity);
+    userFavActivity = userActSelect.getAttribute("value");
   }
 });
 
-// line 53 - 60: functions to set and get the information from localstorage
+// line 51 - 59: functions to set and get the information from localstorage
 function getUserPreferences() {
   return JSON.parse(localStorage.getItem("user")) || {};
 }
@@ -76,9 +73,9 @@ function displayForm() {
   formPreferencesEl.className = "form-container";
   mainDisplayEl.className = "hide";
 
-  // Display button when click preferences button
+  // Display cxl button when click 'change - preferences' button
   const user = getUserPreferences();
-  if (user.length !== 0) {
+  if (Object.keys(user).length !== 0) {
     cancelBtnEl.className = "btn";
   } else {
     cancelBtnEl.className = "hide";
@@ -97,10 +94,10 @@ function getFormValues() {
 
   // validation that user filled all form fields
   if (
-    !user.name &&
-    !user.sign &&
-    !user.location &&
-    !user.music &&
+    !user.name ||
+    !user.sign ||
+    !user.location ||
+    !user.music ||
     !user.activity
   ) {
     window.alert("Plaese fill in all the fields");
@@ -114,6 +111,7 @@ function getFormValues() {
   displayMainSection(user);
 }
 
+
 // Add and remove Hide class to Main section function
 function displayMainSection(user) {
   aboutSectionEl.className = "hide";
@@ -126,31 +124,30 @@ function displayMainSection(user) {
 
   preferenceBtnEl.classList = "btnPref";
 
-  // Retrieve weather and display
   retrieveWeather(user);
-  // retrieveSongOfTheDay(user);
+
+  retrieveSongOfTheDay(user);
+
   retrieveSign(user);
+  
   displayJoke();
   getActivity(user);
-
 }
 
+// Get data from API-Weather
 function retrieveWeather(user) {
-  const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
+  // URL to do the fetch for weather API
   const queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     user.location +
     "&units=metric" +
-    "&appid=" +
-    APIKey;
+    "&appid=fc1547c6c6eac0f4c70827baceb61b94";
 
   fetch(queryURL)
     .then(function (response) {
       if (!response.ok) {
-
         console.log("Error: " + response.statusText);
         throw new Error();
-
       }
       return response.json();
     })
@@ -162,6 +159,7 @@ function retrieveWeather(user) {
     });
 }
 
+// Display Weather section with date and time
 function displayWeather(data) {
   displayTimeAndWeather.innerHTML = "";
 
@@ -183,17 +181,17 @@ function displayWeather(data) {
   const iconWeather = document.createElement("img");
   iconWeather.src = iconWeatherUrl;
   displayTimeAndWeather.appendChild(iconWeather);
-
-
 }
 
+// Get data from API-Youtube
 function retrieveSongOfTheDay(user) {
+  // Youtube playlists ID - genre
+  const rockPlayList = "PL7nC4HwnKolxXrPCIvyVpgyllXrI21ygs";
+  const classicPlayList = "PL7nC4HwnKolwdfoSgpKAP83XkyrON2ssY";
+  const funkPlayList = "PL7nC4HwnKolwI9exF1Jm_SnLHStMIGn3c";
+  const latinPlayList = "PLB30C5C064B67AABF";
 
-  const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
-  const classicPlayList = "PL2788304DC59DBEB4";
-  const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
-  const latinPlayList = "PLkqz3S84Tw-QoDzNr9VvMXxUTQ7TkANO_";
-
+  // Select the playlist for favorite user genre
   let userPlaylist;
 
   switch (user.music) {
@@ -218,22 +216,21 @@ function retrieveSongOfTheDay(user) {
     }
   }
 
-
   const MusicQueryURL =
-    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K&maxResults=25&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" +
+    userPlaylist +
+    "&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
 
-  https: fetch(MusicQueryURL)
+  // Get data from Youtube API
+  fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
-
         console.log(response);
         throw new Error();
-
       }
       return response.json();
     })
     .then(function (dataSong) {
-      console.log(dataSong);
       displaySongOfTheDay(dataSong);
     })
     .catch(function (error) {
@@ -241,14 +238,13 @@ function retrieveSongOfTheDay(user) {
     });
 }
 
+// Display the song of the day
 function displaySongOfTheDay(dataSong) {
-
-  const i = Math.floor(Math.random() * 30);
+  const i = Math.floor(Math.random() * 4);
 
   iframeSong.src =
     "https://www.youtube.com/embed/" +
     dataSong.items[i].snippet.resourceId.videoId;
-
 }
 
 // User Starsign function
@@ -259,9 +255,10 @@ function retrieveSign(user) {
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
   console.log(user);
+  
 // Appends user sign to h2 as a greeting
   const userSign = document.createElement("h2");
-  userSign.textContent = "Hey"+"  "+user.sign+"!" ;
+  userSign.textContent = "Hey" + "  " + user.sign + "!";
   signReadingEl.appendChild(userSign);
 
   // Fetches via POST method, checks if response is okay - if not throws an error for catch - if yes, converts JSON to data
@@ -283,7 +280,7 @@ function retrieveSign(user) {
     });
 }
 
-// Aztro 'Description' parameter is appended to display on the main display
+// Aztro 'Description' parameter is appended to display Horoscope reading on the main display 
 function displaySign(data) {
   const signReading = document.createElement("p");
   signReading.textContent = data.description;
@@ -291,22 +288,20 @@ function displaySign(data) {
 }
 
 function displayJoke() {
-  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode")
+  fetch(
+    "https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode"
+  )
     .then(function (response) {
       if (!response.ok) {
-
         console.log(response);
 
         throw new Error();
-
       }
       return response.json();
     })
     .then(function (data) {
-
       jokeOneEl.textContent = data.setup;
       jokeTwoEl.textContent = data.delivery;
-
     })
     .catch(function (error) {
       console.log(error);
@@ -314,23 +309,19 @@ function displayJoke() {
 }
 
 function getActivity(user) {
-  var activityURL = "https://www.boredapi.com/api/activity?type=" + user.activity;
-
+  var activityURL =
+    "https://www.boredapi.com/api/activity?type=" + user.activity;
 
   fetch(activityURL)
     .then(function (response) {
       if (!response.ok) {
-
         console.log(response);
         throw new Error();
-
       }
       return response.json();
     })
     .then(function (data) {
-
       activityOfTheDatEl.textContent = data.activity;
-
     })
     .catch(function (error) {
       console.log(error);
