@@ -123,16 +123,15 @@ function displayMainSection(user) {
   headerTitleEl.textContent =
     " Welcome " + user.name + "! Enjoy your coffee, mate!";
 
-  preferenceBtnEl.classList = "btn";
+  preferenceBtnEl.classList = "btnPref";
 
   // Retrieve weather and display
   retrieveWeather(user);
-  retrieveSongOfTheDay(user);
+ // retrieveSongOfTheDay(user);
   retrieveSign(user);
   displayJoke();
   getActivity(user);
 
-  // displayPicture();
 }
 
 function retrieveWeather(user) {
@@ -165,24 +164,26 @@ function retrieveWeather(user) {
 function displayWeather(data) {
   displayTimeAndWeather.innerHTML = "";
 
-  const currentDate = document.createElement("h2");
+  const currentDate = document.createElement("p");
   currentDate.textContent = moment().format("dddd, DD-MMM-YYYY, hh:mm");
   displayTimeAndWeather.appendChild(currentDate);
 
-  const cityAndCountry = document.createElement("h2");
+  const cityAndCountry = document.createElement("p");
   cityAndCountry.textContent = data.name + " - " + data.sys.country;
   displayTimeAndWeather.appendChild(cityAndCountry);
 
   const iconWeatherUrl =
     "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
 
+  const temperature = document.createElement("p");
+  temperature.textContent = "Temperature: " + data.main.temp + " °C";
+  displayTimeAndWeather.appendChild(temperature);
+
   const iconWeather = document.createElement("img");
   iconWeather.src = iconWeatherUrl;
   displayTimeAndWeather.appendChild(iconWeather);
 
-  const temperature = document.createElement("p");
-  temperature.textContent = "Temperature: " + data.main.temp + " °C";
-  displayTimeAndWeather.appendChild(temperature);
+
 }
 
 function retrieveSongOfTheDay(user) {
@@ -251,10 +252,16 @@ function displaySongOfTheDay(dataSong) {
 
 // User starsign
 function retrieveSign(user) {
+  signReadingEl.innerHTML = "";
+
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
   console.log(user);
+
+  const userSign = document.createElement("h2");
+  userSign.textContent = "Hey"+"  "+user.sign+"!" ;
+  signReadingEl.appendChild(userSign);
 
   fetch(queryUrl, {
     method: "POST",
@@ -275,7 +282,6 @@ function retrieveSign(user) {
 }
 
 function displaySign(data) {
-  signReadingEl.innerHTML = "";
   const signReading = document.createElement("p");
   signReading.textContent = data.description;
   signReadingEl.appendChild(signReading);
@@ -305,8 +311,7 @@ function displayJoke() {
 }
 
 function getActivity(user) {
-  var activityURL =
-    "https://www.boredapi.com/api/activity?type=" + user.activity;
+  var activityURL = "https://www.boredapi.com/api/activity?type=" + user.activity;
 
 
   fetch(activityURL)
