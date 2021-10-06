@@ -14,6 +14,7 @@ const preferenceBtnEl = document.querySelector("#preferences");
 const displayTimeAndWeather = document.querySelector("#display-weather-time");
 const userActivityEl = document.querySelector("#user-activity");
 const cancelBtnEl = document.querySelector("#cancel-btn");
+const resetBtnEl = document.querySelector("#reset-btn");
 const iframeSong = document.querySelector("#iframe-song");
 const signReadingEl = document.querySelector("#sign-reading");
 const activityOfTheDatEl = document.querySelector("#activity");
@@ -27,6 +28,10 @@ preferenceBtnEl.addEventListener("click", displayForm);
 cancelBtnEl.addEventListener("click", function () {
   const user = getUserPreferences();
   displayMainSection(user);
+});
+resetBtnEl.addEventListener("click", function () {
+  localStorage.removeItem("user");
+  window.location.reload();
 });
 
 // Event delegation for music selection buttons
@@ -77,8 +82,10 @@ function displayForm() {
   const user = getUserPreferences();
   if (Object.keys(user).length !== 0) {
     cancelBtnEl.className = "btn";
+    resetBtnEl.className = "btn";
   } else {
     cancelBtnEl.className = "hide";
+    resetBtnEl.className = "hide";
   }
 }
 
@@ -111,7 +118,6 @@ function getFormValues() {
   displayMainSection(user);
 }
 
-
 // Add and remove Hide class to Main section function
 function displayMainSection(user) {
   aboutSectionEl.className = "hide";
@@ -129,7 +135,7 @@ function displayMainSection(user) {
   retrieveSongOfTheDay(user);
 
   retrieveSign(user);
-  
+
   displayJoke();
   getActivity(user);
 }
@@ -250,13 +256,13 @@ function displaySongOfTheDay(dataSong) {
 // User Starsign function
 function retrieveSign(user) {
   signReadingEl.innerHTML = "";
-// Endpoint adds user sign as selected from preferences to complete the parameters
+  // Endpoint adds user sign as selected from preferences to complete the parameters
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
   console.log(user);
-  
-// Appends user sign to h2 as a greeting
+
+  // Appends user sign to h2 as a greeting
   const userSign = document.createElement("h2");
   userSign.textContent = "Hey" + "  " + user.sign + "!";
   signReadingEl.appendChild(userSign);
@@ -280,7 +286,7 @@ function retrieveSign(user) {
     });
 }
 
-// Aztro 'Description' parameter is appended to display Horoscope reading on the main display 
+// Aztro 'Description' parameter is appended to display Horoscope reading on the main display
 function displaySign(data) {
   const signReading = document.createElement("p");
   signReading.textContent = data.description;
