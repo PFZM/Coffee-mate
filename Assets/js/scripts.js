@@ -164,24 +164,26 @@ function retrieveWeather(user) {
 function displayWeather(data) {
   displayTimeAndWeather.innerHTML = "";
 
-  const currentDate = document.createElement("h2");
+  const currentDate = document.createElement("p");
   currentDate.textContent = moment().format("dddd, DD-MMM-YYYY, hh:mm");
   displayTimeAndWeather.appendChild(currentDate);
 
-  const cityAndCountry = document.createElement("h2");
+  const cityAndCountry = document.createElement("p");
   cityAndCountry.textContent = data.name + " - " + data.sys.country;
   displayTimeAndWeather.appendChild(cityAndCountry);
 
   const iconWeatherUrl =
     "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
 
+  const temperature = document.createElement("p");
+  temperature.textContent = "Temperature: " + data.main.temp + " °C";
+  displayTimeAndWeather.appendChild(temperature);
+
   const iconWeather = document.createElement("img");
   iconWeather.src = iconWeatherUrl;
   displayTimeAndWeather.appendChild(iconWeather);
 
-  const temperature = document.createElement("p");
-  temperature.textContent = "Temperature: " + data.main.temp + " °C";
-  displayTimeAndWeather.appendChild(temperature);
+
 }
 
 function retrieveSongOfTheDay(user) {
