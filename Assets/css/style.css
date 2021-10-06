@@ -58,17 +58,28 @@ header button {
   border-radius: 1.5rem;
   color: white;
   border: white solid 1px;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: slategray;
   cursor: pointer;
 }
+.btnPref{
+  width:20%; height:20%;
+  margin:3%;
+  font-size: 2rem;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  color: white;
+  border: white solid 1px;
+  background-color:slategray;
+  cursor: pointer;
 
+}
 .form-btn {
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 1.5rem;
   color: white;
   border: white solid 1px;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: slategray;
   cursor: pointer;
 }
 
@@ -106,6 +117,7 @@ header button {
   align-content: center;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+  
   
 }
 
@@ -166,10 +178,10 @@ form input {
   margin: 0rem 10rem;
   margin: 0.5rem;
   padding: 0.5rem;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   color: white;
   border: white solid 1px;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: slategrey;
 }
 
 .main-display {
@@ -184,14 +196,24 @@ form input {
   flex-direction: column;
 }
 
-footer {
+/*footer {
   background-color: rgb(255, 255, 255, 0.1);
-  border: 1px solid white;
-  display: flex;
+ display: flex;
   justify-content: center;
+   position: absolute;
   padding: 1.5rem 0rem;
-  position: absolute;
-  bottom: 0;
+  border: 1px solid white;
+    height: auto;
+      bottom: 0;
   width: 100%;
-  height: auto;
+}*/
+
+footer p{
+ /* position: absolute;*/
+  font-size:large;
+  text-align: center;
+  padding-bottom: 1%;
+  bottom: 0;
+  margin: 0 40%;
+  height: auto; 
 }

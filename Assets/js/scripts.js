@@ -123,16 +123,15 @@ function displayMainSection(user) {
   headerTitleEl.textContent =
     " Welcome " + user.name + "! Enjoy your coffee, mate!";
 
-  preferenceBtnEl.classList = "btn";
+  preferenceBtnEl.classList = "btnPref";
 
   // Retrieve weather and display
   retrieveWeather(user);
-  retrieveSongOfTheDay(user);
+ // retrieveSongOfTheDay(user);
   retrieveSign(user);
   displayJoke();
   getActivity(user);
 
-  // displayPicture();
 }
 
 function retrieveWeather(user) {
@@ -305,8 +304,7 @@ function displayJoke() {
 }
 
 function getActivity(user) {
-  var activityURL =
-    "https://www.boredapi.com/api/activity?type=" + user.activity;
+  var activityURL = "https://www.boredapi.com/api/activity?type=" + user.activity;
 
 
   fetch(activityURL)
