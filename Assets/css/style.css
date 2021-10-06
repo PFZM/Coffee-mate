@@ -165,6 +165,7 @@ header button {
 .form-container {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+  margin-bottom:4rem;
   display: flex;
   flex-direction: column;
 }
@@ -291,13 +292,21 @@ form input {
 }
 
 footer {
-  /* position: absolute;*/
   font-size: large;
   text-align: center;
   padding-bottom: 1%;
   bottom: 0;
   margin: 0 40%;
   height: auto;
+}
+.about-section p{
+  margin-bottom: 52rem;
+}
+#welcome-btn{
+  margin-top:1rem;
+  height:80px;
+  width:200px;
+  border-radius: 25px;
 }
 
 #song-otd:hover {
