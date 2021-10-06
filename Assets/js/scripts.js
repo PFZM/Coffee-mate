@@ -29,6 +29,7 @@ cancelBtnEl.addEventListener("click", function () {
   displayMainSection(user);
 });
 
+// Event delegation for music selection buttons
 let userFavGenres;
 userMusicEl.addEventListener("click", function (event) {
   const userSelection = event.target;
@@ -38,6 +39,7 @@ userMusicEl.addEventListener("click", function (event) {
   }
 });
 
+// Event delegation for activities selection buttons
 let userFavActivity;
 userActivityEl.addEventListener("click", function (event) {
   const userActSelect = event.target;
@@ -47,7 +49,7 @@ userActivityEl.addEventListener("click", function (event) {
   }
 });
 
-// line 53 - 60: functions to set and get the information from localstorage
+// line 51 - 59: functions to set and get the information from localstorage
 function getUserPreferences() {
   return JSON.parse(localStorage.getItem("user")) || {};
 }
@@ -71,7 +73,7 @@ function displayForm() {
   formPreferencesEl.className = "form-container";
   mainDisplayEl.className = "hide";
 
-  // Display button when click preferences button
+  // Display cxl button when click 'change - preferences' button
   const user = getUserPreferences();
   if (Object.keys(user).length !== 0) {
     cancelBtnEl.className = "btn";
@@ -109,6 +111,7 @@ function getFormValues() {
   displayMainSection(user);
 }
 
+// Display main section of the app with all the content
 function displayMainSection(user) {
   aboutSectionEl.className = "hide";
   formPreferencesEl.className = "hide";
@@ -127,14 +130,14 @@ function displayMainSection(user) {
   getActivity(user);
 }
 
+// Get data from API-Weather
 function retrieveWeather(user) {
-  const APIKey = "fc1547c6c6eac0f4c70827baceb61b94";
+  // URL to do the fetch for weather API
   const queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     user.location +
     "&units=metric" +
-    "&appid=" +
-    APIKey;
+    "&appid=fc1547c6c6eac0f4c70827baceb61b94";
 
   fetch(queryURL)
     .then(function (response) {
@@ -152,6 +155,7 @@ function retrieveWeather(user) {
     });
 }
 
+// Display Weather section with date and time
 function displayWeather(data) {
   displayTimeAndWeather.innerHTML = "";
 
@@ -175,12 +179,15 @@ function displayWeather(data) {
   displayTimeAndWeather.appendChild(iconWeather);
 }
 
+// Get data from API-Youtube
 function retrieveSongOfTheDay(user) {
+  // Youtube playlists ID - genre
   const rockPlayList = "PL7nC4HwnKolxXrPCIvyVpgyllXrI21ygs";
   const classicPlayList = "PL7nC4HwnKolwdfoSgpKAP83XkyrON2ssY";
   const funkPlayList = "PL7nC4HwnKolwI9exF1Jm_SnLHStMIGn3c";
   const latinPlayList = "PLB30C5C064B67AABF";
 
+  // Select the playlist for favorite user genre
   let userPlaylist;
 
   switch (user.music) {
@@ -210,6 +217,7 @@ function retrieveSongOfTheDay(user) {
     userPlaylist +
     "&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
 
+  // Get data from Youtube API
   fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
@@ -226,6 +234,7 @@ function retrieveSongOfTheDay(user) {
     });
 }
 
+// Display the song of the day
 function displaySongOfTheDay(dataSong) {
   const i = Math.floor(Math.random() * 4);
 
