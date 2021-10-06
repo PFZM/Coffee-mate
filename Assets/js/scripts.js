@@ -111,7 +111,8 @@ function getFormValues() {
   displayMainSection(user);
 }
 
-// Display main section of the app with all the content
+
+// Add and remove Hide class to Main section function
 function displayMainSection(user) {
   aboutSectionEl.className = "hide";
   formPreferencesEl.className = "hide";
@@ -124,8 +125,11 @@ function displayMainSection(user) {
   preferenceBtnEl.classList = "btnPref";
 
   retrieveWeather(user);
+
   retrieveSongOfTheDay(user);
+
   retrieveSign(user);
+  
   displayJoke();
   getActivity(user);
 }
@@ -243,17 +247,21 @@ function displaySongOfTheDay(dataSong) {
     dataSong.items[i].snippet.resourceId.videoId;
 }
 
-// User starsign
+// User Starsign function
 function retrieveSign(user) {
   signReadingEl.innerHTML = "";
-
+// Endpoint adds user sign as selected from preferences to complete the parameters
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
+  console.log(user);
+  
+// Appends user sign to h2 as a greeting
   const userSign = document.createElement("h2");
   userSign.textContent = "Hey" + "  " + user.sign + "!";
   signReadingEl.appendChild(userSign);
 
+  // Fetches via POST method, checks if response is okay - if not throws an error for catch - if yes, converts JSON to data
   fetch(queryUrl, {
     method: "POST",
   })
@@ -272,6 +280,7 @@ function retrieveSign(user) {
     });
 }
 
+// Aztro 'Description' parameter is appended to display Horoscope reading on the main display 
 function displaySign(data) {
   const signReading = document.createElement("p");
   signReading.textContent = data.description;

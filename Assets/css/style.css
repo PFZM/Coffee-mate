@@ -296,21 +296,9 @@ form input {
     }
   }
 
-/*footer {
-  background-color: rgb(255, 255, 255, 0.1);
- display: flex;
-  justify-content: center;
-   position: absolute;
-  padding: 1.5rem 0rem;
-  border: 1px solid white;
-    height: auto;
-      bottom: 0;
-  width: 100%;
-}*/
-
-footer p {
-  /* position: absolute;*/
-  font-size: large;
+footer {
+/* position: absolute;*/
+  font-size:large;
   text-align: center;
   padding-bottom: 1%;
   bottom: 0;
