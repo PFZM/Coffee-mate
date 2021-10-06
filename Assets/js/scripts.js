@@ -252,10 +252,16 @@ function displaySongOfTheDay(dataSong) {
 
 // User starsign
 function retrieveSign(user) {
+  signReadingEl.innerHTML = "";
+
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
   console.log(user);
+
+  const userSign = document.createElement("h2");
+  userSign.textContent = "Hey"+"  "+user.sign+"!" ;
+  signReadingEl.appendChild(userSign);
 
   fetch(queryUrl, {
     method: "POST",
@@ -276,7 +282,6 @@ function retrieveSign(user) {
 }
 
 function displaySign(data) {
-  signReadingEl.innerHTML = "";
   const signReading = document.createElement("p");
   signReading.textContent = data.description;
   signReadingEl.appendChild(signReading);

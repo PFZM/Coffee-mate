@@ -5,6 +5,9 @@
   /* border: 1px solid grey; */
   color: white;
 }
+:root{ 
+  --themeColor: rgba(4,91,126,1);
+}
 
 html {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,7 +32,7 @@ p {
 body {
   background-size: cover;
   background: rgb(1,76,77);
- background: linear-gradient(40deg, rgba(1,76,77,1) 0%, rgba(4,91,126,1) 21%, rgba(50,41,94,1) 67%, rgba(73,18,85,1) 100%);
+ background: linear-gradient(50deg, rgba(1,76,77,1) 0%, rgba(4,91,126,1) 21%, rgba(50,41,94,1) 67%, rgba(73,18,85,1) 100%);
 }
 
 header {
@@ -145,7 +148,7 @@ form {
 
 form input {
   margin: 0rem 2.5rem;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: var(--themeColor);
   border: 1px solid white;
   height: 2.5rem;
 }
@@ -153,14 +156,14 @@ form input {
 /* Horoscope form styling */
 .starsigndropdown {
   margin: 0rem 2.5rem;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: var(--themeColor);
   border: 1px solid white;
   height: 2.5rem;
 }
 
 /* Horoscope dropdown option styling */
 .signoption {
-  background-color: rgba(50,41,94);
+  background-color: var(--themeColor);
 }
 
 .form-label {
@@ -221,21 +224,21 @@ footer p{
 
 
 #song-otd:hover{
-  background-color:rgba(4,91,126,1);
+  background-color:var(--themeColor);
   border-radius: 2rem;
 }
 #horoscope:hover{
-  background-color:rgba(4,91,126,1);
+  background-color:var(--themeColor);
   border-radius: 2rem;
 
 }
 #joke-otd:hover{
-  background-color:rgba(4,91,126,1);
+  background-color:var(--themeColor);
   border-radius: 2rem;
 
 }
 #activity-otd:hover{
-  background-color:rgba(4,91,126,1);
+  background-color: var(--themeColor);
   border-radius: 2rem;
 
 }
