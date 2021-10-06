@@ -20,7 +20,6 @@ const activityOfTheDatEl = document.querySelector("#activity");
 const jokeOneEl = document.querySelector("#joke-1");
 const jokeTwoEl = document.querySelector("#joke-2");
 
-
 // Event listeners of the application
 welcomeBtnEl.addEventListener("click", displayForm);
 formBtnEl.addEventListener("click", getFormValues);
@@ -30,25 +29,21 @@ cancelBtnEl.addEventListener("click", function () {
   displayMainSection(user);
 });
 
-const userFavGenres = [];
+let userFavGenres;
 userMusicEl.addEventListener("click", function (event) {
   const userSelection = event.target;
 
   if (userSelection.matches("button") === true) {
-    const userMusic = userSelection.getAttribute("value");
-    userFavGenres.push(userMusic);
-    console.log(userFavGenres);
+    userFavGenres = userSelection.getAttribute("value");
   }
 });
 
-const userFavActivity = [];
+let userFavActivity;
 userActivityEl.addEventListener("click", function (event) {
   const userActSelect = event.target;
 
   if (userActSelect.matches("button") === true) {
-    const userActivity = userActSelect.getAttribute("value");
-    userFavActivity.push(userActivity);
-    console.log(userFavActivity);
+    userFavActivity = userActSelect.getAttribute("value");
   }
 });
 
@@ -78,7 +73,7 @@ function displayForm() {
 
   // Display button when click preferences button
   const user = getUserPreferences();
-  if (user.length !== 0) {
+  if (Object.keys(user).length !== 0) {
     cancelBtnEl.className = "btn";
   } else {
     cancelBtnEl.className = "hide";
@@ -97,10 +92,10 @@ function getFormValues() {
 
   // validation that user filled all form fields
   if (
-    !user.name &&
-    !user.sign &&
-    !user.location &&
-    !user.music &&
+    !user.name ||
+    !user.sign ||
+    !user.location ||
+    !user.music ||
     !user.activity
   ) {
     window.alert("Plaese fill in all the fields");
@@ -125,13 +120,11 @@ function displayMainSection(user) {
 
   preferenceBtnEl.classList = "btnPref";
 
-  // Retrieve weather and display
   retrieveWeather(user);
- // retrieveSongOfTheDay(user);
+  retrieveSongOfTheDay(user);
   retrieveSign(user);
   displayJoke();
   getActivity(user);
-
 }
 
 function retrieveWeather(user) {
@@ -146,10 +139,8 @@ function retrieveWeather(user) {
   fetch(queryURL)
     .then(function (response) {
       if (!response.ok) {
-
         console.log("Error: " + response.statusText);
         throw new Error();
-
       }
       return response.json();
     })
@@ -182,16 +173,13 @@ function displayWeather(data) {
   const iconWeather = document.createElement("img");
   iconWeather.src = iconWeatherUrl;
   displayTimeAndWeather.appendChild(iconWeather);
-
-
 }
 
 function retrieveSongOfTheDay(user) {
-
-  const rockPlayList = "PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K";
-  const classicPlayList = "PL2788304DC59DBEB4";
-  const funkPlayList = "PL7IyjolaORJ1kM2JEO4s9VGp4CUJZu5Gr";
-  const latinPlayList = "PLkqz3S84Tw-QoDzNr9VvMXxUTQ7TkANO_";
+  const rockPlayList = "PL7nC4HwnKolxXrPCIvyVpgyllXrI21ygs";
+  const classicPlayList = "PL7nC4HwnKolwdfoSgpKAP83XkyrON2ssY";
+  const funkPlayList = "PL7nC4HwnKolwI9exF1Jm_SnLHStMIGn3c";
+  const latinPlayList = "PLB30C5C064B67AABF";
 
   let userPlaylist;
 
@@ -217,22 +205,20 @@ function retrieveSongOfTheDay(user) {
     }
   }
 
-
   const MusicQueryURL =
-    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNxOe-buLm6cz8UQ-hyG1nm3RTNBUBv3K&maxResults=25&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
+    "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" +
+    userPlaylist +
+    "&key=AIzaSyBc58mT_-8rn6_TGyrZRhizEdMAXVqiRJQ";
 
-  https: fetch(MusicQueryURL)
+  fetch(MusicQueryURL)
     .then(function (response) {
       if (!response.ok) {
-
         console.log(response);
         throw new Error();
-
       }
       return response.json();
     })
     .then(function (dataSong) {
-      console.log(dataSong);
       displaySongOfTheDay(dataSong);
     })
     .catch(function (error) {
@@ -241,13 +227,11 @@ function retrieveSongOfTheDay(user) {
 }
 
 function displaySongOfTheDay(dataSong) {
-
-  const i = Math.floor(Math.random() * 30);
+  const i = Math.floor(Math.random() * 4);
 
   iframeSong.src =
     "https://www.youtube.com/embed/" +
     dataSong.items[i].snippet.resourceId.videoId;
-
 }
 
 // User starsign
@@ -257,10 +241,8 @@ function retrieveSign(user) {
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
 
-  console.log(user);
-
   const userSign = document.createElement("h2");
-  userSign.textContent = "Hey"+"  "+user.sign+"!" ;
+  userSign.textContent = "Hey" + "  " + user.sign + "!";
   signReadingEl.appendChild(userSign);
 
   fetch(queryUrl, {
@@ -288,22 +270,20 @@ function displaySign(data) {
 }
 
 function displayJoke() {
-  fetch("https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode")
+  fetch(
+    "https://v2.jokeapi.dev/joke/Any?type=twopart&lang=en&blacklistFlags=nsfw,racist,sexist,explicit&safe-mode"
+  )
     .then(function (response) {
       if (!response.ok) {
-
         console.log(response);
 
         throw new Error();
-
       }
       return response.json();
     })
     .then(function (data) {
-
       jokeOneEl.textContent = data.setup;
       jokeTwoEl.textContent = data.delivery;
-
     })
     .catch(function (error) {
       console.log(error);
@@ -311,28 +291,23 @@ function displayJoke() {
 }
 
 function getActivity(user) {
-  var activityURL = "https://www.boredapi.com/api/activity?type=" + user.activity;
-
+  var activityURL =
+    "https://www.boredapi.com/api/activity?type=" + user.activity;
 
   fetch(activityURL)
     .then(function (response) {
       if (!response.ok) {
-
         console.log(response);
         throw new Error();
-
       }
       return response.json();
     })
     .then(function (data) {
-
       activityOfTheDatEl.textContent = data.activity;
-
     })
     .catch(function (error) {
       console.log(error);
     });
 }
-
 
 init();

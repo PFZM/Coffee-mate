@@ -5,12 +5,12 @@
   /* border: 1px solid grey; */
   color: white;
 }
-:root{ 
-  --themeColor: rgba(4,91,126,1);
+:root {
+  --themeColor: rgba(4, 91, 126, 1);
 }
 
 html {
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 62.5%;
 }
 
@@ -31,8 +31,14 @@ p {
 
 body {
   background-size: cover;
-  background: rgb(1,76,77);
- background: linear-gradient(50deg, rgba(1,76,77,1) 0%, rgba(4,91,126,1) 21%, rgba(50,41,94,1) 67%, rgba(73,18,85,1) 100%);
+  background: rgb(1, 76, 77);
+  background: linear-gradient(
+    50deg,
+    rgba(1, 76, 77, 1) 0%,
+    rgba(4, 91, 126, 1) 21%,
+    rgba(50, 41, 94, 1) 67%,
+    rgba(73, 18, 85, 1) 100%
+  );
 }
 
 header {
@@ -40,7 +46,7 @@ header {
   justify-content: space-evenly;
   background-color: rgb(255, 255, 255, 0.1);
   border: 1px solid white;
-  padding:2.5rem 0;
+  padding: 2.5rem 0;
 }
 
 header button {
@@ -64,17 +70,17 @@ header button {
   background-color: slategray;
   cursor: pointer;
 }
-.btnPref{
-  width:15%; height:15%;
-  margin:2%;
+.btnPref {
+  width: 15%;
+  height: 15%;
+  margin: 2%;
   font-size: 2rem;
   padding: 1.5rem;
   border-radius: 1.5rem;
   color: white;
   border: white solid 1px;
-  background-color:slategray;
+  background-color: slategray;
   cursor: pointer;
-
 }
 .form-btn {
   margin: 0.5rem;
@@ -121,6 +127,7 @@ header button {
   align-content: center;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+
   }
  @media screen and (max-width: 600px) {
     .about-section{
@@ -158,6 +165,7 @@ header button {
   
       }
     }
+
 
 
 .form-container {
@@ -300,34 +308,29 @@ form input {
   width: 100%;
 }*/
 
-footer p{
-/* position: absolute;*/
-  font-size:large;
+footer p {
+  /* position: absolute;*/
+  font-size: large;
   text-align: center;
   padding-bottom: 1%;
   bottom: 0;
   margin: 0 40%;
-  height: auto; 
+  height: auto;
 }
 
-
-
-#song-otd:hover{
-  background-color:var(--themeColor);
-  border-radius: 2rem;
-}
-#horoscope:hover{
-  background-color:var(--themeColor);
-  border-radius: 2rem;
-
-}
-#joke-otd:hover{
-  background-color:var(--themeColor);
-  border-radius: 2rem;
-
-}
-#activity-otd:hover{
+#song-otd:hover {
   background-color: var(--themeColor);
   border-radius: 2rem;
-
+}
+#horoscope:hover {
+  background-color: var(--themeColor);
+  border-radius: 2rem;
+}
+#joke-otd:hover {
+  background-color: var(--themeColor);
+  border-radius: 2rem;
+}
+#activity-otd:hover {
+  background-color: var(--themeColor);
+  border-radius: 2rem;
 }
