@@ -111,8 +111,6 @@ function getFormValues() {
     return;
   }
 
-  localStorage.removeItem(user);
-
   setUserPreferences(user);
 
   displayMainSection(user);
@@ -246,7 +244,7 @@ function retrieveSongOfTheDay(user) {
 
 // Display the song of the day
 function displaySongOfTheDay(dataSong) {
-  const i = Math.floor(Math.random() * 4);
+  const i = Math.floor(Math.random() * dataSong.items.length + 1);
 
   iframeSong.src =
     "https://www.youtube.com/embed/" +
@@ -259,8 +257,6 @@ function retrieveSign(user) {
   // Endpoint adds user sign as selected from preferences to complete the parameters
   const queryUrl =
     "https://aztro.sameerkumar.website?day=today&sign=" + user.sign;
-
-  console.log(user);
 
   // Appends user sign to h2 as a greeting
   const userSign = document.createElement("h2");
@@ -315,7 +311,7 @@ function displayJoke() {
 }
 
 function getActivity(user) {
-  var activityURL =
+  const activityURL =
     "https://www.boredapi.com/api/activity?type=" + user.activity;
 
   fetch(activityURL)
