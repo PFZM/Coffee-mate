@@ -71,4 +71,4 @@ SO THAT I can start my day in a fun way and in a good mood.
 
 The following animation demonstrates the application functionality:
 
-![A user enters the application and is welcome. Then the user set its preferences through a form and is directed to the main display with the content according to their preferences. User can change its preferences at any time.](./Assets/Gif/FuncApp.gif)
+![A user enters the application and is welcome. Then the user set its preferences through a form and is directed to the main display with the content according to their preferences. User can change its preferences at any time.](./Assets/Gif/FuncApp1.gif)
