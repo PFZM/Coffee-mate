@@ -165,7 +165,7 @@ header button {
 .form-container {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
-  margin-bottom:4rem;
+  margin-bottom: 4rem;
   display: flex;
   flex-direction: column;
 }
@@ -299,13 +299,13 @@ footer {
   margin: 0 40%;
   height: auto;
 }
-.about-section p{
+.about-section p {
   margin-bottom: 52rem;
 }
-#welcome-btn{
-  margin-top:1rem;
-  height:80px;
-  width:200px;
+#welcome-btn {
+  margin-top: 1rem;
+  height: 80px;
+  width: 200px;
   border-radius: 25px;
 }
 
@@ -324,4 +324,66 @@ footer {
 #activity-otd:hover {
   background-color: var(--themeColor);
   border-radius: 2rem;
+}
+
+@media screen and (max-width: 450px) {
+  .about-section {
+    display: flex;
+    flex-direction: column;
+  }
+  .about-section p {
+    margin-bottom: 1rem;
+  }
+  #welcome-btn {
+    display: block;
+    justify-self: center;
+  }
+
+  .form-container {
+    margin: 0.2rem 0.2rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  #header {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  #display-weather-time {
+    order: 2;
+  }
+
+  .headerTitle {
+    order: 3;
+    margin: 2rem 3rem;
+  }
+
+  .headerTitle p {
+    padding-top: 2rem;
+  }
+
+  #preferences {
+    width: 80%;
+    margin-top: 2rem;
+    order: 1;
+  }
+
+  #form {
+    width: 80%;
+    margin: 0.2rem 1rem;
+    justify-self: center;
+  }
+
+  .main-display {
+    margin: 0.2rem 0.2rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  .btn {
+    width: 60%;
+    align-self: center;
+  }
 }
