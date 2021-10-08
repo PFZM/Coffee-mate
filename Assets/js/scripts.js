@@ -38,9 +38,11 @@ resetBtnEl.addEventListener("click", function () {
 let userFavGenres;
 userMusicEl.addEventListener("click", function (event) {
   const userSelection = event.target;
+  removeClassOn("#user-music>button", "form-btn-selected");
 
   if (userSelection.matches("button") === true) {
     userFavGenres = userSelection.getAttribute("value");
+    event.target.classList.add("form-btn-selected");
   }
 });
 
@@ -48,13 +50,25 @@ userMusicEl.addEventListener("click", function (event) {
 let userFavActivity;
 userActivityEl.addEventListener("click", function (event) {
   const userActSelect = event.target;
+  removeClassOn("#user-activity>button", "form-btn-selected");
 
   if (userActSelect.matches("button") === true) {
     userFavActivity = userActSelect.getAttribute("value");
+    event.target.classList.add("form-btn-selected");
   }
 });
 
-// line 51 - 59: functions to set and get the information from localstorage
+// Generic function to remove classes on selected elements
+function removeClassOn(cssSelector, cssClass) {
+  const elements = document.querySelectorAll(cssSelector);
+
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    element.classList.remove(cssClass);
+  }
+}
+
+//Functions to set and get the information from localstorage
 function getUserPreferences() {
   return JSON.parse(localStorage.getItem("user")) || {};
 }
@@ -83,9 +97,40 @@ function displayForm() {
   if (Object.keys(user).length !== 0) {
     cancelBtnEl.className = "btn";
     resetBtnEl.className = "btn";
+    userNameEl.value = user.name;
+    signEl.value = user.sign;
+    userLocationEl.value = user.location;
+
+    const musicButton = targetMusicButtonByValue(user.music);
+    musicButton?.classList.add("form-btn-selected");
+
+    const activityButton = targetActiviyButtonByValue(user.activity);
+    activityButton?.classList.add("form-btn-selected");
   } else {
     cancelBtnEl.className = "hide";
     resetBtnEl.className = "hide";
+  }
+}
+
+function targetMusicButtonByValue(music) {
+  const musicGenres = document.querySelectorAll("#user-music>button");
+
+  for (let i = 0; i < musicGenres.length; i++) {
+    const element = musicGenres[i];
+    if (element.value.toLowerCase() === music.toLowerCase()) {
+      return element;
+    }
+  }
+}
+
+function targetActiviyButtonByValue(activity) {
+  const activityTypes = document.querySelectorAll("#user-activity>button");
+
+  for (let i = 0; i < activityTypes.length; i++) {
+    const element = activityTypes[i];
+    if (element.value.toLowerCase() === activity.toLowerCase()) {
+      return element;
+    }
   }
 }
 
