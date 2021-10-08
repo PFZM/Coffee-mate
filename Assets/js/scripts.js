@@ -117,7 +117,7 @@ function targetMusicButtonByValue(music) {
 
   for (let i = 0; i < musicGenres.length; i++) {
     const element = musicGenres[i];
-    if (element.textContent.toLowerCase() === music.toLowerCase()) {
+    if (element.value.toLowerCase() === music.toLowerCase()) {
       return element;
     }
   }
@@ -128,7 +128,7 @@ function targetActiviyButtonByValue(activity) {
 
   for (let i = 0; i < activityTypes.length; i++) {
     const element = activityTypes[i];
-    if (element.textContent.toLowerCase() === activity.toLowerCase()) {
+    if (element.value.toLowerCase() === activity.toLowerCase()) {
       return element;
     }
   }
